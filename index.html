@@ -12,203 +12,67 @@
             theme: {
                 extend: {
                     colors: {
-                        blood: { 50:'#fef2f2', 100:'#fde8e8', 200:'#fcd5d5', 300:'#f8a4a4', 400:'#f87171', 500:'#dc2626', 600:'#b91c1c', 700:'#991b1b', 800:'#7f1d1d', 900:'#5c1010', 950:'#3b0707' },
-                        night: { 50:'#1a1a2e', 100:'#16162a', 200:'#121226', 300:'#0f0f22', 400:'#0c0c1e', 500:'#09091a', 600:'#070716', 700:'#050512', 800:'#03030e', 900:'#01010a' },
-                        ash: { 400:'#9ca3af', 500:'#6b7280', 600:'#4b5563', 700:'#374151', 800:'#1f2937', 900:'#111827' }
+                        blood: { 50:'#fef2f2',100:'#fde8e8',200:'#fcd5d5',300:'#f8a4a4',400:'#f87171',500:'#dc2626',600:'#b91c1c',700:'#991b1b',800:'#7f1d1d',900:'#5c1010',950:'#3b0707' },
+                        night: { 50:'#1a1a2e',100:'#16162a',200:'#121226',300:'#0f0f22',400:'#0c0c1e',500:'#09091a',600:'#070716',700:'#050512',800:'#03030e',900:'#01010a' },
+                        ash: { 400:'#9ca3af',500:'#6b7280',600:'#4b5563',700:'#374151',800:'#1f2937',900:'#111827' }
                     },
                     fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        cormorant: ['Cormorant Garamond', 'serif'],
-                        body: ['Inter', 'sans-serif']
+                        cinzel: ['Cinzel','serif'],
+                        cormorant: ['Cormorant Garamond','serif'],
+                        body: ['Inter','sans-serif']
                     }
                 }
             }
         }
     </script>
     <style>
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #09091a; }
-        ::-webkit-scrollbar-thumb { background: #3b0707; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #5c1010; }
-        ::selection { background: #991b1b; color: #fef2f2; }
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#09091a}::-webkit-scrollbar-thumb{background:#3b0707;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#5c1010}::selection{background:#991b1b;color:#fef2f2}
+        .rain-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+        .raindrop{position:absolute;top:-20px;width:1px;background:linear-gradient(transparent,rgba(180,180,200,0.3));animation:fall linear infinite}
+        @keyframes fall{0%{transform:translateY(-20px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(100vh);opacity:0}}
+        .fog{position:fixed;bottom:0;left:0;width:200%;height:30%;background:linear-gradient(transparent,rgba(9,9,26,0.6) 30%,rgba(9,9,26,0.9));animation:fogDrift 25s linear infinite;pointer-events:none;z-index:2}
+        @keyframes fogDrift{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .neon-text{text-shadow:0 0 7px rgba(220,38,38,0.6),0 0 20px rgba(220,38,38,0.4),0 0 42px rgba(220,38,38,0.2),0 0 82px rgba(220,38,38,0.1);animation:neonPulse 3s ease-in-out infinite alternate}
+        @keyframes neonPulse{from{text-shadow:0 0 7px rgba(220,38,38,0.6),0 0 20px rgba(220,38,38,0.4),0 0 42px rgba(220,38,38,0.2)}to{text-shadow:0 0 4px rgba(220,38,38,0.4),0 0 12px rgba(220,38,38,0.2),0 0 24px rgba(220,38,38,0.1)}}
+        .neon-flicker{animation:flicker 4s infinite}
+        @keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:0.4}}
+        .flip-card{perspective:1000px;cursor:pointer}.flip-card-inner{transition:transform 0.8s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d;position:relative;width:100%;height:100%}.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}.flip-card-front,.flip-card-back{backface-visibility:hidden;position:absolute;width:100%;height:100%;top:0;left:0}.flip-card-back{transform:rotateY(180deg)}
+        .glyph-spin{animation:glyphSpin 20s linear infinite}@keyframes glyphSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+        .modal-overlay{opacity:0;pointer-events:none;transition:opacity 0.4s ease}.modal-overlay.active{opacity:1;pointer-events:auto}.modal-content{transform:scale(0.9) translateY(20px);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}.modal-overlay.active .modal-content{transform:scale(1) translateY(0)}
+        .blood-drip::after{content:'';position:absolute;bottom:-8px;left:50%;width:3px;height:15px;background:linear-gradient(#dc2626,transparent);border-radius:0 0 3px 3px;animation:drip 3s ease-in infinite}
+        @keyframes drip{0%,100%{height:15px;opacity:1}70%{height:25px;opacity:0.6}90%{height:30px;opacity:0}}
+        .ticker-scroll{animation:tickerScroll 30s linear infinite}@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .glitch{position:relative}.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}.glitch::before{color:#0ff;animation:glitch1 2s infinite;clip-path:inset(0 0 80% 0)}.glitch::after{color:#f00;animation:glitch2 2s infinite;clip-path:inset(80% 0 0 0)}
+        @keyframes glitch1{0%,100%{transform:translate(0)}20%{transform:translate(-2px,2px)}40%{transform:translate(2px,-2px)}60%{transform:translate(-1px,1px)}}
+        @keyframes glitch2{0%,100%{transform:translate(0)}20%{transform:translate(2px,-2px)}40%{transform:translate(-2px,2px)}60%{transform:translate(1px,-1px)}}
+        .heartbeat-line{stroke-dasharray:1000;stroke-dashoffset:1000;animation:drawLine 3s ease forwards,pulseOpacity 2s ease-in-out 3s infinite}@keyframes drawLine{to{stroke-dashoffset:0}}@keyframes pulseOpacity{0%,100%{opacity:0.3}50%{opacity:1}}
+        body{background:#09091a}
 
-        /* Pluie */
-        .rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
-        .raindrop {
-            position: absolute; top: -20px;
-            width: 1px; background: linear-gradient(transparent, rgba(180,180,200,0.3));
-            animation: fall linear infinite;
+        /* Éditeur */
+        .editor-drawer{transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+        .editor-drawer.open{transform:translateX(0)}
+        .editor-tab{white-space:nowrap}
+        .editor-tab.active{background:rgba(220,38,38,0.2);color:#f87171;border-color:rgba(220,38,38,0.4)}
+        .editor-field textarea,.editor-field input[type="text"],.editor-field input[type="url"]{
+            width:100%;background:rgba(15,15,34,0.8);border:1px solid rgba(92,16,16,0.3);border-radius:8px;
+            padding:10px 14px;color:#d1d5db;font-family:'Cormorant Garamond',serif;font-size:15px;
+            transition:border-color 0.2s;resize:vertical;min-height:60px;
         }
-        @keyframes fall {
-            0% { transform: translateY(-20px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* Brouillard */
-        .fog {
-            position: fixed; bottom: 0; left: 0; width: 200%; height: 30%;
-            background: linear-gradient(transparent, rgba(9,9,26,0.6) 30%, rgba(9,9,26,0.9));
-            animation: fogDrift 25s linear infinite;
-            pointer-events: none; z-index: 2;
-        }
-        @keyframes fogDrift {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Néon */
-        .neon-text {
-            text-shadow: 0 0 7px rgba(220,38,38,0.6), 0 0 20px rgba(220,38,38,0.4), 0 0 42px rgba(220,38,38,0.2), 0 0 82px rgba(220,38,38,0.1);
-            animation: neonPulse 3s ease-in-out infinite alternate;
-        }
-        @keyframes neonPulse {
-            from { text-shadow: 0 0 7px rgba(220,38,38,0.6), 0 0 20px rgba(220,38,38,0.4), 0 0 42px rgba(220,38,38,0.2); }
-            to { text-shadow: 0 0 4px rgba(220,38,38,0.4), 0 0 12px rgba(220,38,38,0.2), 0 0 24px rgba(220,38,38,0.1); }
-        }
-
-        .neon-flicker {
-            animation: flicker 4s infinite;
-        }
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-            20%, 24%, 55% { opacity: 0.4; }
-        }
-
-        /* Flip card */
-        .flip-card { perspective: 1000px; cursor: pointer; }
-        .flip-card-inner {
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            position: relative; width: 100%; height: 100%;
-        }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            backface-visibility: hidden;
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-        }
-        .flip-card-back { transform: rotateY(180deg); }
-
-        /* Secret hover */
-        .secret-word {
-            color: #6b7280;
-            border-bottom: 1px dashed #4b5563;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .secret-word:hover { color: #dc2626; border-bottom-color: #dc2626; }
-
-        /* Glyphe animé */
-        .glyph-spin { animation: glyphSpin 20s linear infinite; }
-        @keyframes glyphSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* Fade in */
-        .fade-in {
-            opacity: 0; transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-        /* Modal */
-        .modal-overlay {
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content {
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
-
-        /* Blood drip */
-        .blood-drip {
-            position: relative;
-        }
-        .blood-drip::after {
-            content: '';
-            position: absolute; bottom: -8px; left: 50%;
-            width: 3px; height: 15px;
-            background: linear-gradient(#dc2626, transparent);
-            border-radius: 0 0 3px 3px;
-            animation: drip 3s ease-in infinite;
-        }
-        @keyframes drip {
-            0%, 100% { height: 15px; opacity: 1; }
-            70% { height: 25px; opacity: 0.6; }
-            90% { height: 30px; opacity: 0; }
-        }
-
-        /* Ticker */
-        .ticker-scroll {
-            animation: tickerScroll 30s linear infinite;
-        }
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Glitch */
-        .glitch {
-            position: relative;
-        }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-        .glitch::before {
-            color: #0ff;
-            animation: glitch1 2s infinite;
-            clip-path: inset(0 0 80% 0);
-        }
-        .glitch::after {
-            color: #f00;
-            animation: glitch2 2s infinite;
-            clip-path: inset(80% 0 0 0);
-        }
-        @keyframes glitch1 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-1px, 1px); }
-        }
-        @keyframes glitch2 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(2px, -2px); }
-            40% { transform: translate(-2px, 2px); }
-            60% { transform: translate(1px, -1px); }
-        }
-
-        /* Heartbeat line */
-        .heartbeat-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawLine 3s ease forwards, pulseOpacity 2s ease-in-out 3s infinite;
-        }
-        @keyframes drawLine {
-            to { stroke-dashoffset: 0; }
-        }
-        @keyframes pulseOpacity {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        body { background: #09091a; }
+        .editor-field textarea:focus,.editor-field input:focus{outline:none;border-color:rgba(220,38,38,0.5)}
+        .editor-field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:6px;font-family:'Inter',sans-serif}
+        .toast{transform:translateY(20px);opacity:0;transition:all 0.3s ease}.toast.show{transform:translateY(0);opacity:1}
     </style>
 </head>
 <body class="font-body text-gray-300 overflow-x-hidden">
 
-    <!-- Pluie -->
     <div class="rain-container" id="rain"></div>
-    <!-- Brouillard -->
     <div class="fog"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 border-b border-blood-950/50" style="background: rgba(9,9,26,0.85); backdrop-filter: blur(16px);">
+    <!-- NAV -->
+    <nav class="fixed top-0 w-full z-50 border-b border-blood-950/50" style="background:rgba(9,9,26,0.85);backdrop-filter:blur(16px)">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3" id="adminTrigger" title="Triple-clic pour l'éditeur">
                 <div class="w-8 h-8 rounded-full border border-blood-700 flex items-center justify-center">
                     <div class="w-3 h-3 rounded-full bg-blood-600 animate-pulse"></div>
                 </div>
@@ -217,93 +81,67 @@
             <div class="hidden md:flex items-center gap-8">
                 <a href="#rumeurs" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Rumeurs</a>
                 <a href="#factions" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Factions</a>
-                <a href="#nécrologie" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Nécrologie</a>
+                <a href="#necro" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Nécrologie</a>
                 <a href="#contacts" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Contacts</a>
-                <a href="#chronologie" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Chronologie</a>
+                <a href="#chrono" class="text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Chronologie</a>
             </div>
             <button id="menuBtn" class="md:hidden text-gray-500 hover:text-blood-400 transition-colors">
                 <iconify-icon icon="lucide:menu" width="20"></iconify-icon>
             </button>
         </div>
-        <!-- Mobile menu -->
-        <div id="mobileMenu" class="md:hidden hidden border-t border-blood-950/50 px-6 pb-4" style="background: rgba(9,9,26,0.95);">
-            <a href="#rumeurs" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Rumeurs</a>
-            <a href="#factions" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Factions</a>
-            <a href="#nécrologie" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Nécrologie</a>
-            <a href="#contacts" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Contacts</a>
-            <a href="#chronologie" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400 transition-colors">Chronologie</a>
+        <div id="mobileMenu" class="md:hidden hidden border-t border-blood-950/50 px-6 pb-4" style="background:rgba(9,9,26,0.95)">
+            <a href="#rumeurs" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400">Rumeurs</a>
+            <a href="#factions" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400">Factions</a>
+            <a href="#necro" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400">Nécrologie</a>
+            <a href="#contacts" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400">Contacts</a>
+            <a href="#chrono" class="block py-3 text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-blood-400">Chronologie</a>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="relative min-h-screen flex items-center justify-center px-6 pt-16">
-        <!-- BG image -->
         <div class="absolute inset-0 z-0">
-            <img src="https://picsum.photos/seed/chicago-night-1992-dark/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-20" style="filter: saturate(0.2) brightness(0.4) hue-rotate(10deg);">
-            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(9,9,26,0.7), rgba(9,9,26,0.4) 40%, rgba(9,9,26,0.8) 80%, #09091a);"></div>
+            <img src="https://picsum.photos/seed/chicago-night-1992-dark/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-20" style="filter:saturate(0.2) brightness(0.4) hue-rotate(10deg)">
+            <div class="absolute inset-0" style="background:linear-gradient(to bottom,rgba(9,9,26,0.7),rgba(9,9,26,0.4) 40%,rgba(9,9,26,0.8) 80%,#09091a)"></div>
         </div>
-
-        <!-- Glyphe décorative -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-[0.03]">
             <svg class="glyph-spin" width="600" height="600" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="50" r="48" stroke="#dc2626" stroke-width="0.3"/>
-                <circle cx="50" cy="50" r="35" stroke="#dc2626" stroke-width="0.2"/>
-                <polygon points="50,5 95,50 50,95 5,50" stroke="#dc2626" stroke-width="0.3" fill="none"/>
-                <polygon points="50,15 85,50 50,85 15,50" stroke="#dc2626" stroke-width="0.2" fill="none" transform="rotate(45 50 50)"/>
-                <line x1="50" y1="2" x2="50" y2="98" stroke="#dc2626" stroke-width="0.15"/>
-                <line x1="2" y1="50" x2="98" y2="50" stroke="#dc2626" stroke-width="0.15"/>
+                <circle cx="50" cy="50" r="48" stroke="#dc2626" stroke-width="0.3"/><circle cx="50" cy="50" r="35" stroke="#dc2626" stroke-width="0.2"/>
+                <polygon points="50,5 95,50 50,95 5,50" stroke="#dc2626" stroke-width="0.3" fill="none"/><polygon points="50,15 85,50 50,85 15,50" stroke="#dc2626" stroke-width="0.2" fill="none" transform="rotate(45 50 50)"/>
+                <line x1="50" y1="2" x2="50" y2="98" stroke="#dc2626" stroke-width="0.15"/><line x1="2" y1="50" x2="98" y2="50" stroke="#dc2626" stroke-width="0.15"/>
             </svg>
         </div>
-
         <div class="relative z-10 text-center max-w-4xl mx-auto">
-            <!-- Ligne EKG -->
-            <svg class="mx-auto mb-8 opacity-40" width="200" height="40" viewBox="0 0 200 40">
-                <path class="heartbeat-line" d="M0,20 L60,20 L70,20 L80,5 L90,35 L100,10 L110,30 L120,20 L200,20" fill="none" stroke="#dc2626" stroke-width="1.5"/>
-            </svg>
-
+            <svg class="mx-auto mb-8 opacity-40" width="200" height="40" viewBox="0 0 200 40"><path class="heartbeat-line" d="M0,20 L60,20 L70,20 L80,5 L90,35 L100,10 L110,30 L120,20 L200,20" fill="none" stroke="#dc2626" stroke-width="1.5"/></svg>
             <p class="font-cormorant text-blood-500/70 text-sm tracking-[0.4em] uppercase mb-6">Monde des Ténèbres — Anno Domini</p>
-            <h1 class="font-cinzel text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-2">
-                <span class="neon-text text-blood-500 neon-flicker">1992</span>
-            </h1>
-            <h2 class="font-cinzel text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] text-gray-400 mt-4 mb-8">CHICAGO BY NIGHT</h2>
-
-            <div class="w-16 h-px bg-blood-700 mx-auto mb-8 blood-drip"></div>
-
-            <blockquote class="font-cormorant italic text-xl sm:text-2xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12">
-                « La bête ne dort jamais. Elle attend, patiente, et quand tu crois enfin avoir trouvé la paix... elle te rappelle ce que tu es. »
-            </blockquote>
-
+            <h1 class="font-cinzel text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-2"><span class="neon-text text-blood-500 neon-flicker" data-key="hero.year">1992</span></h1>
+            <h2 class="font-cinzel text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] text-gray-400 mt-4 mb-8" data-key="hero.title">CHICAGO BY NIGHT</h2>
+            <div class="w-16 h-px bg-blood-700 mx-auto mb-8 blood-drip relative"></div>
+            <blockquote class="font-cormorant italic text-xl sm:text-2xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12" data-key="hero.quote">« La bête ne dort jamais. Elle attend, patiente, et quand tu crois enfin avoir trouvé la paix... elle te rappelle ce que tu es. »</blockquote>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button onclick="document.getElementById('rumeurs').scrollIntoView({behavior:'smooth'})" class="group px-8 py-3.5 bg-blood-700/80 hover:bg-blood-600 border border-blood-500/30 text-white font-cinzel text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                    Entrez dans la Nuit
-                    <iconify-icon icon="lucide:arrow-down" class="ml-2 inline-block group-hover:translate-y-0.5 transition-transform"></iconify-icon>
-                </button>
-                <button onclick="openModal('nodModal')" class="px-8 py-3.5 border border-ash-600 text-gray-400 hover:text-blood-400 hover:border-blood-700 font-cinzel text-sm tracking-[0.15em] uppercase transition-all duration-300">
-                    Le Livre de Nod
-                </button>
+                <button onclick="document.getElementById('rumeurs').scrollIntoView({behavior:'smooth'})" class="group px-8 py-3.5 bg-blood-700/80 hover:bg-blood-600 border border-blood-500/30 text-white font-cinzel text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">Entrez dans la Nuit <iconify-icon icon="lucide:arrow-down" class="ml-2 inline-block group-hover:translate-y-0.5 transition-transform"></iconify-icon></button>
+                <button onclick="openModal('nodModal')" class="px-8 py-3.5 border border-ash-600 text-gray-400 hover:text-blood-400 hover:border-blood-700 font-cinzel text-sm tracking-[0.15em] uppercase transition-all duration-300">Le Livre de Nod</button>
             </div>
         </div>
-
-        <!-- Scroll indicator -->
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40">
             <span class="text-[10px] tracking-[0.3em] uppercase text-gray-500">Scrollez</span>
             <div class="w-px h-8 bg-gradient-to-b from-blood-700 to-transparent animate-pulse"></div>
         </div>
     </section>
 
-    <!-- TICKER - Nouvelles de Chicago -->
+    <!-- TICKER -->
     <div class="relative z-10 border-y border-blood-950/50 bg-blood-950/20 overflow-hidden">
-        <div class="flex ticker-scroll whitespace-nowrap py-3">
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 CORPS TROUVÉ DANS UNE RUE SOUTERRAINE — TROISIÈME CETTE SEMAINE</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 GRAFFITI ANTI-VAMPIRE APPARU DANS LOOP — « LES MORTS MARCHENT »</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 LE PRINCE N'A PAS ÉTÉ VU DEPUIS 12 JOURS</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 DES RAPPORTS DE DISPARITIONS DANS LES BOIS DE LINCOLN PARK</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 ÉTRANGE COUPURE DE COURANT DANS LE SECTEUR DE RIVER NORTH</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 CORPS TROUVÉ DANS UNE RUE SOUTERRAINE — TROISIÈME CETTE SEMAINE</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 GRAFFITI ANTI-VAMPIRE APPARU DANS LOOP — « LES MORTS MARCHENT »</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 LE PRINCE N'A PAS ÉTÉ VU DEPUIS 12 JOURS</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 DES RAPPORTS DE DISPARITIONS DANS LES BOIS DE LINCOLN PARK</span>
-            <span class="mx-8 text-xs tracking-wider text-gray-600">🔴 ÉTRANGE COUPURE DE COURANT DANS LE SECTEUR DE RIVER NORTH</span>
+        <div class="flex ticker-scroll whitespace-nowrap py-3" id="tickerRow">
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.0">🔴 CORPS TROUVÉ DANS UNE RUE SOUTERRAINE — TROISIÈME CETTE SEMAINE</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.1">🔴 GRAFFITI ANTI-VAMPIRE APPARU DANS LOOP — « LES MORTS MARCHENT »</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.2">🔴 LE PRINCE N'A PAS ÉTÉ VU DEPUIS 12 JOURS</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.3">🔴 DES RAPPORTS DE DISPARITIONS DANS LES BOIS DE LINCOLN PARK</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.4">🔴 ÉTRANGE COUPURE DE COURANT DANS LE SECTEUR DE RIVER NORTH</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.0b">🔴 CORPS TROUVÉ DANS UNE RUE SOUTERRAINE — TROISIÈME CETTE SEMAINE</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.1b">🔴 GRAFFITI ANTI-VAMPIRE APPARU DANS LOOP — « LES MORTS MARCHENT »</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.2b">🔴 LE PRINCE N'A PAS ÉTÉ VU DEPUIS 12 JOURS</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.3b">🔴 DES RAPPORTS DE DISPARITIONS DANS LES BOIS DE LINCOLN PARK</span>
+            <span class="mx-8 text-xs tracking-wider text-gray-600" data-key="ticker.4b">🔴 ÉTRANGE COUPURE DE COURANT DANS LE SECTEUR DE RIVER NORTH</span>
         </div>
     </div>
 
@@ -311,186 +149,11 @@
     <section id="rumeurs" class="relative z-10 py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium">Ce qui se murmure dans l'ombre</span>
-                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4">Rumeurs de la Nuit</h2>
-                <p class="font-cormorant italic text-gray-500 mt-4 text-lg">Cliquez sur une rumeur pour en savoir plus... si vous osez.</p>
+                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium" data-key="sec.rumors.label">Ce qui se murmure dans l'ombre</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4" data-key="sec.rumors.title">Rumeurs de la Nuit</h2>
+                <p class="font-cormorant italic text-gray-500 mt-4 text-lg" data-key="sec.rumors.sub">Cliquez sur une rumeur pour en savoir plus... si vous osez.</p>
             </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Rumeur 1 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">Le <span class="secret-word" onclick="event.stopPropagation(); openModal('secret1')">Sheriff</span> aurait été vu en train de parler avec un <span class="secret-word" onclick="event.stopPropagation(); openModal('secret2')">membre du Sabbat</span> près du Navy Pier...</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Deux témoins Tremere confirment. Mais le Sheriff nie farouchement. Un tiers affirme que ce n'était pas le Sabbat... mais un <em className="text-blood-400">Inconnu</em>.</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-yellow-600 animate-pulse"></span>
-                                <span class="text-[10px] text-yellow-600 tracking-wider uppercase">Fiabilité douteuse</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rumeur 2 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">Un <span class="secret-word" onclick="event.stopPropagation(); openModal('secret3')">ghoul anonyme</span> aurait laissé un message gravé dans le béton sous la Lower Wacker Drive...</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Le message dit : <em class="text-blood-400">« La Bête ne reconnaît pas de Prince. 13ème génération. La moisson vient. »</em> Les Nosferatu enquêtent discrètement.</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-blood-600 animate-pulse"></span>
-                                <span class="text-[10px] text-blood-500 tracking-wider uppercase">Source confirmée</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rumeur 3 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">La <span class="secret-word" onclick="event.stopPropagation(); openModal('secret4')">Primogénie</span> se réunirait en secret sans le Prince. Certains parlent d'un <em>vote de destitution</em>...</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Non confirmé. Mais le Ventrue Primogène a annulé ses rendez-vous trois soirs de suite. Et le représentant Toreador semble... nerveux.</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-gray-500 animate-pulse"></span>
-                                <span class="text-[10px] text-gray-500 tracking-wider uppercase">Non vérifié</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rumeur 4 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">Des mortels disparaissent dans le quartier de <span class="secret-word" onclick="event.stopPropagation(); openModal('secret5')">Pilsen</span>. La police pense à un tueur en série. Les Kindred savent mieux.</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Les corps retrouvés portent toutes les mêmes marques : deux morsures, et le sang drainé jusqu'à la dernière goutte. Pas de trace de Discipline connue. <em class="text-blood-400">Pas de trace du tout.</em></p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-blood-600 animate-pulse"></span>
-                                <span class="text-[10px] text-blood-500 tracking-wider uppercase">Confirmé — Urgent</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rumeur 5 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">Un ancien artefact Noddiste serait caché sous l'<span class="secret-word" onclick="event.stopPropagation(); openModal('secret6')">Art Institute</span>. Un Malkavien le hurle chaque nuit depuis deux semaines.</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Le Malkavien en question est <em>Patrice</em>, un ancien de la 8ème génération. Ses paroles sont habituellement délirantes... mais les Tremere ont envoyé des renforts depuis Vienne.</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-yellow-600 animate-pulse"></span>
-                                <span class="text-[10px] text-yellow-600 tracking-wider uppercase">Partiellement vérifié</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rumeur 6 -->
-                <div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-300 leading-relaxed">Helena, l'ancienne <span class="secret-word" onclick="event.stopPropagation(); openModal('secret7')">Toreador de la 4ème génération</span>, aurait quitté sa torpeur. Ou alors... quelque chose l'a réveillée.</p>
-                            </div>
-                            <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
-                        </div>
-                        <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter: blur(8px);">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon>
-                                    <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span>
-                                </div>
-                                <p class="font-cormorant text-lg text-gray-200 leading-relaxed">Si c'est vrai, c'est une catastrophe. Helena ne se réveille pas sans raison. La dernière fois, c'était en <em class="text-blood-400">1871</em>. Le Grand Incendie de Chicago a suivi.</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-blood-500 animate-pulse"></span>
-                                <span class="text-[10px] text-blood-400 tracking-wider uppercase">Non vérifié — Critique</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="rumorsGrid"></div>
         </div>
     </section>
 
@@ -498,303 +161,59 @@
     <section id="factions" class="relative z-10 py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium">Qui contrôle la nuit</span>
-                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4">Les Factions de Chicago</h2>
+                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium" data-key="sec.factions.label">Qui contrôle la nuit</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4" data-key="sec.factions.title">Les Factions de Chicago</h2>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Camarilla -->
-                <div class="fade-in group relative rounded-xl border border-blood-900/30 bg-night-50/60 overflow-hidden hover:border-blood-700/40 transition-all duration-500" style="backdrop-filter: blur(8px);">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blood-600 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="p-8">
-                        <div class="w-12 h-12 rounded-lg bg-blood-900/30 border border-blood-800/30 flex items-center justify-center mb-6">
-                            <iconify-icon icon="lucide:crown" class="text-blood-500" width="20"></iconify-icon>
-                        </div>
-                        <h3 class="font-cinzel text-xl text-gray-200 mb-2">La Camarilla</h3>
-                        <p class="text-[10px] tracking-[0.2em] uppercase text-blood-600 mb-4">Ordre · Tradition · Contrôle</p>
-                        <p class="font-cormorant text-gray-400 leading-relaxed">Le Prince règne — du moins en théorie. Mais quand le trône tremble, les Traditions deviennent des suggestions. Les six clans « nobles » maintiennent une façade de civilisation sur un précipice de sang.</p>
-                        <div class="mt-6 pt-6 border-t border-blood-900/20">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Ventrue</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Toreador</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Tremere</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Nosferatu</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Brujah</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Malkavian</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sabbat -->
-                <div class="fade-in group relative rounded-xl border border-blood-900/30 bg-night-50/60 overflow-hidden hover:border-blood-700/40 transition-all duration-500" style="backdrop-filter: blur(8px);">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blood-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="p-8">
-                        <div class="w-12 h-12 rounded-lg bg-blood-900/30 border border-blood-800/30 flex items-center justify-center mb-6">
-                            <iconify-icon icon="lucide:flame" class="text-blood-500" width="20"></iconify-icon>
-                        </div>
-                        <h3 class="font-cinzel text-xl text-gray-200 mb-2">Le Sabbat</h3>
-                        <p class="text-[10px] tracking-[0.2em] uppercase text-blood-600 mb-4">Liberté · Bête · Guerre</p>
-                        <p class="font-cormorant text-gray-400 leading-relaxed">Ils rôdent aux portes de la ville, attendant le bon moment. Des packs de Lasombra et Tzimisce testent les défenses chaque nuit. Leurs Ritae sont des cauchemars que même les anciens redoutent.</p>
-                        <div class="mt-6 pt-6 border-t border-blood-900/20">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Lasombra</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Tzimisce</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Antitribu</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-blood-900/20 text-blood-400 rounded">Packs</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Anarchs -->
-                <div class="fade-in group relative rounded-xl border border-blood-900/30 bg-night-50/60 overflow-hidden hover:border-blood-700/40 transition-all duration-500" style="backdrop-filter: blur(8px);">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="p-8">
-                        <div class="w-12 h-12 rounded-lg bg-amber-900/20 border border-amber-800/20 flex items-center justify-center mb-6">
-                            <iconify-icon icon="lucide:flag" class="text-amber-500" width="20"></iconify-icon>
-                        </div>
-                        <h3 class="font-cinzel text-xl text-gray-200 mb-2">Les Anarchs</h3>
-                        <p class="text-[10px] tracking-[0.2em] uppercase text-amber-600 mb-4">Rébellion · Indépendance · Chaos</p>
-                        <p class="font-cormorant text-gray-400 leading-relaxed">Ni serviteurs du Prince ni monstres du Sabbat. Ils croient en la liberté — une liberté que la Bête rend dangereuse. Leur baron de la North Side gagne en influence chaque semaine.</p>
-                        <div class="mt-6 pt-6 border-t border-blood-900/20">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-amber-900/20 text-amber-400 rounded">Brujah</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-amber-900/20 text-amber-400 rounded">Gangrel</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-amber-900/20 text-amber-400 rounded">Caitiff</span>
-                                <span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-amber-900/20 text-amber-400 rounded">Baronnie</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="grid md:grid-cols-3 gap-8" id="factionsGrid"></div>
         </div>
     </section>
 
     <!-- NÉCROLOGIE -->
-    <section id="nécrologie" class="relative z-10 py-24 px-6">
+    <section id="necro" class="relative z-10 py-24 px-6">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium">Ils ne se relèveront pas</span>
-                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4">Nécrologie</h2>
-                <p class="font-cormorant italic text-gray-500 mt-4 text-lg">Les Kindred disparus ces derniers mois. Mort finale ou fuite ? Personne ne sait.</p>
+                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium" data-key="sec.necro.label">Ils ne se relèveront pas</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4" data-key="sec.necro.title">Nécrologie</h2>
+                <p class="font-cormorant italic text-gray-500 mt-4 text-lg" data-key="sec.necro.sub">Les Kindred disparus ces derniers mois. Mort finale ou fuite ? Personne ne sait.</p>
             </div>
-
-            <div class="space-y-4">
-                <div class="fade-in group flex items-start gap-6 p-6 rounded-xl border border-blood-900/20 bg-night-50/40 hover:border-blood-800/30 transition-all duration-300" style="backdrop-filter: blur(8px);">
-                    <div class="text-center min-w-[60px]">
-                        <span class="font-cinzel text-2xl text-blood-600">17</span>
-                        <p class="text-[10px] text-gray-600 tracking-wider uppercase">Mars</p>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-cinzel text-gray-300 group-hover:text-blood-400 transition-colors">Marcus Veyrac</h4>
-                        <p class="text-xs text-gray-600 tracking-wider mt-1">Brujah · 10ème génération · Anarch</p>
-                        <p class="font-cormorant text-gray-500 mt-3">Trouvé en cendres dans un entrepôt de South Side. Aucune trace de combat. Le feu semble être venu de l'intérieur. Les Tremere n'ont aucun commentaire.</p>
-                    </div>
-                    <iconify-icon icon="lucide:skull" class="text-blood-900/30 group-hover:text-blood-700/50 transition-colors mt-1" width="18"></iconify-icon>
-                </div>
-
-                <div class="fade-in group flex items-start gap-6 p-6 rounded-xl border border-blood-900/20 bg-night-50/40 hover:border-blood-800/30 transition-all duration-300" style="backdrop-filter: blur(8px);">
-                    <div class="text-center min-w-[60px]">
-                        <span class="font-cinzel text-2xl text-blood-600">02</span>
-                        <p class="text-[10px] text-gray-600 tracking-wider uppercase">Avril</p>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-cinzel text-gray-300 group-hover:text-blood-400 transition-colors">Dr. Elaine Kessler</h4>
-                        <p class="text-xs text-gray-600 tracking-wider mt-1">Tremere · 9ème génération · Chantry de Chicago</p>
-                        <p class="font-cormorant text-gray-500 mt-3">Disparue de la Chantry sans que personne ne remarque. Son rituel de protection était intact. Sa chambre, parfaitement rangée. Comme si elle n'avait jamais existé.</p>
-                    </div>
-                    <iconify-icon icon="lucide:skull" class="text-blood-900/30 group-hover:text-blood-700/50 transition-colors mt-1" width="18"></iconify-icon>
-                </div>
-
-                <div class="fade-in group flex items-start gap-6 p-6 rounded-xl border border-blood-900/20 bg-night-50/40 hover:border-blood-800/30 transition-all duration-300" style="backdrop-filter: blur(8px);">
-                    <div class="text-center min-w-[60px]">
-                        <span class="font-cinzel text-2xl text-blood-600">19</span>
-                        <p class="text-[10px] text-gray-600 tracking-wider uppercase">Mai</p>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-cinzel text-gray-300 group-hover:text-blood-400 transition-colors">« Digits » Washington</h4>
-                        <p class="text-xs text-gray-600 tracking-wider mt-1">Nosferatu · 11ème génération · Infojockey</p>
-                        <p class="font-cormorant text-gray-500 mt-3">Son réseau de rats a cessé de signaler. Ses alliés Nosferatu refusent de parler. Un seul message laissé sur un BBS : <em class="text-blood-500">« J'ai vu ce qu'ils cachent sous le lac. »</em></p>
-                    </div>
-                    <iconify-icon icon="lucide:skull" class="text-blood-900/30 group-hover:text-blood-700/50 transition-colors mt-1" width="18"></iconify-icon>
-                </div>
-
-                <div class="fade-in group flex items-start gap-6 p-6 rounded-xl border border-blood-900/20 bg-night-50/40 hover:border-blood-800/30 transition-all duration-300" style="backdrop-filter: blur(8px);">
-                    <div class="text-center min-w-[60px]">
-                        <span class="font-cinzel text-2xl text-blood-600">??</span>
-                        <p class="text-[10px] text-gray-600 tracking-wider uppercase">???</p>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-cinzel text-gray-300 group-hover:text-blood-400 transition-colors glitch" data-text="Inconnu">Inconnu</h4>
-                        <p class="text-xs text-gray-600 tracking-wider mt-1">Clan inconnu · Génération inconnue · Allégeance inconnue</p>
-                        <p class="font-cormorant text-gray-500 mt-3">Un corps vampire retrouvé dans le lac Michigan. Aucun Kindre de Chicago ne le reconnaît. Aucun clan ne le réclame. Sa sang était... <em class="text-blood-500">différent</em>.</p>
-                    </div>
-                    <iconify-icon icon="lucide:help-circle" class="text-blood-900/30 group-hover:text-blood-700/50 transition-colors mt-1" width="18"></iconify-icon>
-                </div>
-            </div>
+            <div class="space-y-4" id="necroGrid"></div>
         </div>
     </section>
 
-    <!-- CONTACTS / NPCs -->
+    <!-- CONTACTS -->
     <section id="contacts" class="relative z-10 py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium">Visages dans l'obscurité</span>
-                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4">Contacts</h2>
-                <p class="font-cormorant italic text-gray-500 mt-4 text-lg">Cliquez sur un portrait pour découvrir ce qu'on sait d'eux.</p>
+                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium" data-key="sec.contacts.label">Visages dans l'obscurité</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4" data-key="sec.contacts.title">Contacts</h2>
+                <p class="font-cormorant italic text-gray-500 mt-4 text-lg" data-key="sec.contacts.sub">Cliquez sur un portrait pour découvrir ce qu'on sait d'eux.</p>
             </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Contact 1 -->
-                <div class="fade-in group cursor-pointer" onclick="openModal('contact1')">
-                    <div class="relative rounded-xl overflow-hidden border border-blood-900/20 hover:border-blood-700/30 transition-all duration-500">
-                        <img src="https://picsum.photos/seed/vampire-prince-dark/400/500.jpg" alt="" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" style="filter: saturate(0.15) brightness(0.5) contrast(1.2);">
-                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5">
-                            <p class="text-[10px] tracking-[0.2em] uppercase text-blood-500 mb-1">Prince de Chicago</p>
-                            <h4 class="font-cinzel text-lg text-gray-200">???</h4>
-                            <p class="text-xs text-gray-500 mt-1">Clan inconnu · Gen. inconnue</p>
-                        </div>
-                        <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-blood-900/50 border border-blood-700/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <iconify-icon icon="lucide:eye" class="text-blood-400" width="14"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact 2 -->
-                <div class="fade-in group cursor-pointer" onclick="openModal('contact2')">
-                    <div class="relative rounded-xl overflow-hidden border border-blood-900/20 hover:border-blood-700/30 transition-all duration-500">
-                        <img src="https://picsum.photos/seed/sheriff-noir-woman/400/500.jpg" alt="" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" style="filter: saturate(0.15) brightness(0.5) contrast(1.2);">
-                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5">
-                            <p class="text-[10px] tracking-[0.2em] uppercase text-blood-500 mb-1">Sheriff</p>
-                            <h4 class="font-cinzel text-lg text-gray-200">Annabelle Trihell</h4>
-                            <p class="text-xs text-gray-500 mt-1">Tremere · 8ème génération</p>
-                        </div>
-                        <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-blood-900/50 border border-blood-700/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <iconify-icon icon="lucide:eye" class="text-blood-400" width="14"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact 3 -->
-                <div class="fade-in group cursor-pointer" onclick="openModal('contact3')">
-                    <div class="relative rounded-xl overflow-hidden border border-blood-900/20 hover:border-blood-700/30 transition-all duration-500">
-                        <img src="https://picsum.photos/seed/baron-anarch-punk/400/500.jpg" alt="" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" style="filter: saturate(0.15) brightness(0.5) contrast(1.2);">
-                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5">
-                            <p class="text-[10px] tracking-[0.2em] uppercase text-amber-500 mb-1">Baron Anarch</p>
-                            <h4 class="font-cinzel text-lg text-gray-200">« Switchblade » Diaz</h4>
-                            <p class="text-xs text-gray-500 mt-1">Brujah · 10ème génération</p>
-                        </div>
-                        <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-amber-900/50 border border-amber-700/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <iconify-icon icon="lucide:eye" class="text-amber-400" width="14"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact 4 -->
-                <div class="fade-in group cursor-pointer" onclick="openModal('contact4')">
-                    <div class="relative rounded-xl overflow-hidden border border-blood-900/20 hover:border-blood-700/30 transition-all duration-500">
-                        <img src="https://picsum.photos/seed/nosferatu-sewers-dark/400/500.jpg" alt="" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" style="filter: saturate(0.15) brightness(0.5) contrast(1.2);">
-                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5">
-                            <p class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-1">Information Broker</p>
-                            <h4 class="font-cinzel text-lg text-gray-200">« Ratking » Merik</h4>
-                            <p class="text-xs text-gray-500 mt-1">Nosferatu · 10ème génération</p>
-                        </div>
-                        <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800/50 border border-gray-600/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <iconify-icon icon="lucide:eye" class="text-gray-400" width="14"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="contactsGrid"></div>
         </div>
     </section>
 
     <!-- CHRONOLOGIE -->
-    <section id="chronologie" class="relative z-10 py-24 px-6">
+    <section id="chrono" class="relative z-10 py-24 px-6">
         <div class="max-w-3xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium">Ce qui a mené à maintenant</span>
-                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4">Chronologie</h2>
+                <span class="text-[10px] tracking-[0.4em] uppercase text-blood-600 font-medium" data-key="sec.chrono.label">Ce qui a mené à maintenant</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl tracking-tight text-gray-200 mt-4" data-key="sec.chrono.title">Chronologie</h2>
             </div>
-
-            <div class="relative">
-                <!-- Ligne verticale -->
+            <div class="relative" id="chronoGrid">
                 <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-blood-900/30 md:-translate-x-px"></div>
-
-                <!-- Event 1 -->
-                <div class="fade-in relative flex md:justify-end mb-12 md:pr-[calc(50%+2rem)] pl-12 md:pl-0">
-                    <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full bg-blood-700 border-2 border-night-500 md:-translate-x-1.5"></div>
-                    <div class="max-w-md">
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Janvier 1992</span>
-                        <h4 class="font-cinzel text-gray-200 mt-1">L'Édit de Silence</h4>
-                        <p class="font-cormorant text-gray-500 mt-2">Le Prince promulgue un édit interdisant toute investigation sur les disparitions du South Side. Quiconque enfreint cette règle sera marqué comme traître.</p>
-                    </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div class="fade-in relative flex md:justify-start mb-12 md:pl-[calc(50%+2rem)] pl-12">
-                    <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full bg-blood-700 border-2 border-night-500 md:-translate-x-1.5"></div>
-                    <div class="max-w-md">
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Février 1992</span>
-                        <h4 class="font-cinzel text-gray-200 mt-1">Le Pack Écarlate</h4>
-                        <p class="font-cormorant text-gray-500 mt-2">Un pack du Sabbat est repéré à Gary, Indiana — à 30 minutes de Chicago. Le Sheriff déploie des Scourges. Deux Scourges ne reviendront pas.</p>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div class="fade-in relative flex md:justify-end mb-12 md:pr-[calc(50%+2rem)] pl-12 md:pl-0">
-                    <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full bg-blood-600 border-2 border-night-500 md:-translate-x-1.5"></div>
-                    <div class="max-w-md">
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-blood-500">Mars 1992</span>
-                        <h4 class="font-cinzel text-gray-200 mt-1">La Mort de Veyrac</h4>
-                        <p class="font-cormorant text-gray-500 mt-2">Marcus Veyrac, Brujah anarch, meurt dans des circonstances mystérieuses. Les Anarchs exigent une enquête. Le Prince refuse. La tension monte.</p>
-                    </div>
-                </div>
-
-                <!-- Event 4 -->
-                <div class="fade-in relative flex md:justify-start mb-12 md:pl-[calc(50%+2rem)] pl-12">
-                    <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full bg-blood-600 border-2 border-night-500 md:-translate-x-1.5"></div>
-                    <div class="max-w-md">
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-blood-500">Avril 1992</span>
-                        <h4 class="font-cinzel text-gray-200 mt-1">Disparition de Kessler</h4>
-                        <p class="font-cormorant text-gray-500 mt-2">La Tremere Elaine Kessler disparaît de sa propre Chantry. Vienne envoie un émissaire. Les autres clans commencent à poser des questions embarrassantes.</p>
-                    </div>
-                </div>
-
-                <!-- Event 5 -->
-                <div class="fade-in relative flex md:justify-end mb-12 md:pr-[calc(50%+2rem)] pl-12 md:pl-0">
-                    <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full bg-blood-500 border-2 border-night-500 md:-translate-x-1.5 animate-pulse"></div>
-                    <div class="max-w-md">
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Mai 1992</span>
-                        <h4 class="font-cinzel text-gray-200 mt-1">Le Silence du Prince</h4>
-                        <p class="font-cormorant text-gray-500 mt-2">Le Prince n'a pas été vu en public depuis 12 jours. Personne ne sait où il se trouve. Le Sheriff refuse de commenter. <em class="text-blood-400">C'est maintenant que votre histoire commence.</em></p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA FINAL -->
+    <!-- CTA -->
     <section class="relative z-10 py-32 px-6">
         <div class="max-w-3xl mx-auto text-center fade-in">
-            <svg class="mx-auto mb-8 opacity-20" width="80" height="80" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="50" r="48" stroke="#dc2626" stroke-width="0.5"/>
-                <polygon points="50,5 95,50 50,95 5,50" stroke="#dc2626" stroke-width="0.5" fill="none"/>
-                <line x1="50" y1="2" x2="50" y2="98" stroke="#dc2626" stroke-width="0.3"/>
-                <line x1="2" y1="50" x2="98" y2="50" stroke="#dc2626" stroke-width="0.3"/>
-                <circle cx="50" cy="50" r="5" fill="#dc2626" opacity="0.5"/>
-            </svg>
-            <p class="font-cormorant italic text-xl sm:text-2xl text-gray-400 leading-relaxed mb-8">
-                « Et la nuit sera votre domaine, mais jamais votre maison. Car la bête a faim, et la faim est éternelle. »
-            </p>
-            <p class="text-[10px] tracking-[0.3em] uppercase text-blood-600 mb-8">— Le Livre de Nod, fragment retrouvé</p>
+            <svg class="mx-auto mb-8 opacity-20" width="80" height="80" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="48" stroke="#dc2626" stroke-width="0.5"/><polygon points="50,5 95,50 50,95 5,50" stroke="#dc2626" stroke-width="0.5" fill="none"/><line x1="50" y1="2" x2="50" y2="98" stroke="#dc2626" stroke-width="0.3"/><line x1="2" y1="50" x2="98" y2="50" stroke="#dc2626" stroke-width="0.3"/><circle cx="50" cy="50" r="5" fill="#dc2626" opacity="0.5"/></svg>
+            <p class="font-cormorant italic text-xl sm:text-2xl text-gray-400 leading-relaxed mb-8" data-key="cta.quote">« Et la nuit sera votre domaine, mais jamais votre maison. Car la bête a faim, et la faim est éternelle. »</p>
+            <p class="text-[10px] tracking-[0.3em] uppercase text-blood-600 mb-8" data-key="cta.source">— Le Livre de Nod, fragment retrouvé</p>
             <div class="w-16 h-px bg-blood-800 mx-auto mb-8"></div>
-            <p class="font-cinzel text-lg text-gray-300 tracking-wide">La prochaine session approche.</p>
-            <p class="font-cormorant text-gray-500 mt-2">Préparez votre humanité. Elle pourrait vous servir.</p>
+            <p class="font-cinzel text-lg text-gray-300 tracking-wide" data-key="cta.line1">La prochaine session approche.</p>
+            <p class="font-cormorant text-gray-500 mt-2" data-key="cta.line2">Préparez votre humanité. Elle pourrait vous servir.</p>
         </div>
     </section>
 
@@ -802,247 +221,570 @@
     <footer class="relative z-10 border-t border-blood-950/30 py-8 px-6">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-6 h-6 rounded-full border border-blood-800/50 flex items-center justify-center">
-                    <div class="w-2 h-2 rounded-full bg-blood-700"></div>
-                </div>
-                <span class="font-cinzel text-xs tracking-[0.2em] text-gray-600 uppercase">Chicago by Night — 1992</span>
+                <div class="w-6 h-6 rounded-full border border-blood-800/50 flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-blood-700"></div></div>
+                <span class="font-cinzel text-xs tracking-[0.2em] text-gray-600 uppercase" data-key="footer.text">Chicago by Night — 1992</span>
             </div>
-            <p class="text-[10px] text-gray-700 tracking-wider">Vampire : La Mascarade © White Wolf Publishing</p>
+            <p class="text-[10px] text-gray-700 tracking-wider" data-key="footer.credit">Vampire : La Mascarade © White Wolf Publishing</p>
         </div>
     </footer>
 
-    <!-- ========== MODALS ========== -->
+    <!-- MODAL LIVRE DE NOD -->
+    <div id="nodModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(8px)">
+        <div class="modal-content max-w-lg w-full rounded-xl border border-blood-800/30 bg-night-100 p-8 relative" style="backdrop-filter:blur(16px)">
+            <button onclick="closeModal('nodModal')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
+            <div class="text-center mb-6"><span class="text-[10px] tracking-[0.3em] uppercase text-blood-600">Fragment sacré</span><h3 class="font-cinzel text-2xl text-gray-200 mt-2" data-key="nod.title">Le Livre de Nod</h3></div>
+            <div class="font-cormorant italic text-gray-400 leading-relaxed space-y-4" data-key="nod.text">« Écoutez la parole de Caine, le premier père.\n\nNe me cherche pas dans les jardins, car je n'y suis plus. Ne me cherche pas dans les cieux, car je n'y suis pas monté.\n\nCherche-moi dans l'ombre entre les mondes, là où le sang est noir comme l'encre et où les étoiles se noient.\n\nCar j'ai porté la malédiction de Dieu, et de cette malédiction est née votre race. Et de votre race naîtra la fin de toutes choses. »</div>
+            <div class="mt-6 pt-4 border-t border-blood-900/20 text-center"><p class="text-[10px] text-gray-600 tracking-wider" data-key="nod.source">— Chapitre des Ténèbres, versets 1-7</p></div>
+        </div>
+    </div>
 
-    <!-- Modal Livre de Nod -->
-    <div id="nodModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-lg w-full rounded-xl border border-blood-800/30 bg-night-100 p-8 relative" style="backdrop-filter: blur(16px);">
-            <button onclick="closeModal('nodModal')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors">
-                <iconify-icon icon="lucide:x" width="18"></iconify-icon>
-            </button>
-            <div class="text-center mb-6">
-                <span class="text-[10px] tracking-[0.3em] uppercase text-blood-600">Fragment sacré</span>
-                <h3 class="font-cinzel text-2xl text-gray-200 mt-2">Le Livre de Nod</h3>
+    <!-- CONTENEUR MODALS DYNAMIQUES -->
+    <div id="dynamicModals"></div>
+
+    <!-- TOAST -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-[200] flex flex-col gap-2"></div>
+
+    <!-- ÉDITEUR -->
+    <div id="editorOverlay" class="fixed inset-0 z-[150] hidden" style="background:rgba(0,0,0,0.5);backdrop-filter:blur(4px)"></div>
+    <div id="editorDrawer" class="editor-drawer fixed top-0 right-0 bottom-0 z-[151] w-full max-w-xl bg-night-300 border-l border-blood-900/40 flex flex-col" style="backdrop-filter:blur(20px)">
+        <div class="px-6 py-4 border-b border-blood-900/30 flex items-center justify-between shrink-0">
+            <div>
+                <h3 class="font-cinzel text-lg text-gray-200">Éditeur</h3>
+                <p class="text-[10px] text-gray-500 tracking-wider mt-0.5">Modifiez les textes puis partagez le lien</p>
             </div>
-            <div class="font-cormorant italic text-gray-400 leading-relaxed space-y-4">
-                <p>« Écoutez la parole de Caine, le premier père.</p>
-                <p>Ne me cherche pas dans les jardins, car je n'y suis plus. Ne me cherche pas dans les cieux, car je n'y suis pas monté.</p>
-                <p>Cherche-moi dans l'ombre entre les mondes, là où le sang est noir comme l'encre et où les étoiles se noient.</p>
-                <p>Car j'ai porté la malédiction de Dieu, et de cette malédiction est née votre race. Et de votre race naîtra la fin de toutes choses. »</p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-blood-900/20 text-center">
-                <p class="text-[10px] text-gray-600 tracking-wider">— Chapitre des Ténèbres, versets 1-7</p>
-            </div>
+            <button onclick="toggleEditor(false)" class="text-gray-500 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="20"></iconify-icon></button>
+        </div>
+        <div class="flex gap-1 px-4 py-3 border-b border-blood-900/20 overflow-x-auto shrink-0" id="editorTabs"></div>
+        <div class="flex-1 overflow-y-auto px-6 py-4 space-y-5" id="editorFields"></div>
+        <div class="px-6 py-4 border-t border-blood-900/30 flex flex-wrap gap-3 shrink-0">
+            <button onclick="saveToStorage()" class="px-5 py-2.5 bg-blood-800/60 hover:bg-blood-700/70 border border-blood-700/30 text-white text-xs tracking-wider uppercase font-cinzel transition-colors flex items-center gap-2"><iconify-icon icon="lucide:save" width="14"></iconify-icon> Sauvegarder</button>
+            <button onclick="exportLink()" class="px-5 py-2.5 bg-blood-700/40 hover:bg-blood-600/50 border border-blood-600/30 text-white text-xs tracking-wider uppercase font-cinzel transition-colors flex items-center gap-2"><iconify-icon icon="lucide:link" width="14"></iconify-icon> Copier le lien</button>
+            <button onclick="resetData()" class="px-5 py-2.5 border border-ash-700 text-gray-500 hover:text-blood-400 hover:border-blood-800 text-xs tracking-wider uppercase font-cinzel transition-colors flex items-center gap-2"><iconify-icon icon="lucide:rotate-ccw" width="14"></iconify-icon> Réinitialiser</button>
         </div>
     </div>
 
-    <!-- Secret modals -->
-    <div id="secret1" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret1')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">Le Sheriff de Chicago</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">Le Sheriff est le bras armé du Prince. Il applique les lois, mène les Scourges, et élimine les transgresseurs. À Chicago, cette position est occupée par une Tremere — fait rare qui inquiète les autres clans. Comment un clan de sorciers peut-il être neutre ?</p>
-        </div>
-    </div>
+<script>
+// ============================================================
+//  DONNÉES PAR DÉFAUT — MODIFIEZ-LES VIA L'ÉDITEUR
+// ============================================================
+const DEFAULT_DATA = {
+    "hero.year": "1992",
+    "hero.title": "CHICAGO BY NIGHT",
+    "hero.quote": "« La bête ne dort jamais. Elle attend, patiente, et quand tu crois enfin avoir trouvé la paix... elle te rappelle ce que tu es. »",
 
-    <div id="secret2" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret2')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">Le Sabbat</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">Le Sabbat est la secte ennemie de la Camarilla. Ils embrassent la Bête plutôt que de la combattre. Leurs membres sont fanatiques, violents, et organisés en packs. Ils considèrent les vampires de la Camarilla comme des esclaves et des lâches. Si le Sheriff les rencontre... c'est soit une trahison, soit une guerre.</p>
-        </div>
-    </div>
+    "ticker.0": "🔴 CORPS TROUVÉ DANS UNE RUE SOUTERRAINE — TROISIÈME CETTE SEMAINE",
+    "ticker.1": "🔴 GRAFFITI ANTI-VAMPIRE APPARU DANS LOOP — « LES MORTS MARCHENT »",
+    "ticker.2": "🔴 LE PRINCE N'A PAS ÉTÉ VU DEPUIS 12 JOURS",
+    "ticker.3": "🔴 DES RAPPORTS DE DISPARITIONS DANS LES BOIS DE LINCOLN PARK",
+    "ticker.4": "🔴 ÉTRANGE COUPURE DE COURANT DANS LE SECTEUR DE RIVER NORTH",
 
-    <div id="secret3" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret3')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">Les Ghouls</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">Un ghoul est un mortel qui a consommé du sang vampire (vitæ) et gagne ainsi une force et une longévité surnaturelles, ainsi qu'un lien de sang vers son maître. Mais si le maître meurt ou cesse de fournir du sang... le ghoul retourne à la normalité. Ou pire. Un ghoul anonyme est un ghoul dont personne ne connaît le maître — et c'est terrifiant.</p>
-        </div>
-    </div>
+    "sec.rumors.label": "Ce qui se murmure dans l'ombre",
+    "sec.rumors.title": "Rumeurs de la Nuit",
+    "sec.rumors.sub": "Cliquez sur une rumeur pour en savoir plus... si vous osez.",
 
-    <div id="secret4" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret4')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">La Primogénie</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">La Primogénie est le conseil des anciens de chaque clan. Ils conseillent le Prince mais n'ont techniquement aucun pouvoir direct. En pratique, un Prince sans le soutien de sa Primogénie est un Prince mort. Si elle se réunit sans lui...</p>
-        </div>
-    </div>
+    "rumor.0.front": "Le Sheriff aurait été vu en train de parler avec un membre du Sabbat près du Navy Pier...",
+    "rumor.0.back": "Deux témoins Tremere confirment. Mais le Sheriff nie farouchement. Un tiers affirme que ce n'était pas le Sabbat... mais un *Inconnu*.",
+    "rumor.0.rel": "douteuse",
+    "rumor.1.front": "Un ghoul anonyme aurait laissé un message gravé dans le béton sous la Lower Wacker Drive...",
+    "rumor.1.back": "Le message dit : *« La Bête ne reconnaît pas de Prince. 13ème génération. La moisson vient. »* Les Nosferatu enquêtent discrètement.",
+    "rumor.1.rel": "confirmée",
+    "rumor.2.front": "La Primogénie se réunirait en secret sans le Prince. Certains parlent d'un *vote de destitution*...",
+    "rumor.2.back": "Non confirmé. Mais le Ventrue Primogène a annulé ses rendez-vous trois soirs de suite. Et le représentant Toreador semble... nerveux.",
+    "rumor.2.rel": "non vérifiée",
+    "rumor.3.front": "Des mortels disparaissent dans le quartier de Pilsen. La police pense à un tueur en série. Les Kindred savent mieux.",
+    "rumor.3.back": "Les corps retrouvés portent toutes les mêmes marques : deux morsures, et le sang drainé jusqu'à la dernière goutte. Pas de trace de Discipline connue. *Pas de trace du tout.*",
+    "rumor.3.rel": "confirmée — urgente",
+    "rumor.4.front": "Un ancien artefact Noddiste serait caché sous l'Art Institute. Un Malkavien le hurle chaque nuit depuis deux semaines.",
+    "rumor.4.back": "Le Malkavien en question est *Patrice*, un ancien de la 8ème génération. Ses paroles sont habituellement délirantes... mais les Tremere ont envoyé des renforts depuis Vienne.",
+    "rumor.4.rel": "partiellement vérifiée",
+    "rumor.5.front": "Helena, l'ancienne Toreador de la 4ème génération, aurait quitté sa torpeur. Ou alors... quelque chose l'a réveillée.",
+    "rumor.5.back": "Si c'est vrai, c'est une catastrophe. Helena ne se réveille pas sans raison. La dernière fois, c'était en *1871*. Le Grand Incendie de Chicago a suivi.",
+    "rumor.5.rel": "non vérifiée — critique",
 
-    <div id="secret5" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret5')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">Pilsen, Chicago</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">Pilsen est un quartier mexicain-américain du Lower West Side. En 1992, c'est un mélange de culture vibrante et de pauvreté urbaine. Pour les Kindred, c'est un territoire disputé — les Anarchs y sont forts, et les mortels y sont nombreux mais pas toujours manqués. Un terrain de chasse parfait... ou un piège.</p>
-        </div>
-    </div>
+    "sec.factions.label": "Qui contrôle la nuit",
+    "sec.factions.title": "Les Factions de Chicago",
 
-    <div id="secret6" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret6')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">L'Art Institute de Chicago</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">L'un des plus grands musées d'art au monde. En 1992, il attire toujours des millions de visiteurs. Mais sous ses fondations se cachent des passages que les architectes officiels ne reconnaissent pas. Les Toreador y tiennent des Elysiums secrets. Et les Malkaviens murmurent que quelque chose d'ancien y est scellé depuis bien avant que le bâtiment n'existe.</p>
-        </div>
-    </div>
+    "faction.0.name": "La Camarilla",
+    "faction.0.sub": "Ordre · Tradition · Contrôle",
+    "faction.0.desc": "Le Prince règne — du moins en théorie. Mais quand le trône tremble, les Traditions deviennent des suggestions. Les six clans « nobles » maintiennent une façade de civilisation sur un précipice de sang.",
+    "faction.0.clans": "Ventrue, Toreador, Tremere, Nosferatu, Brujah, Malkavian",
+    "faction.1.name": "Le Sabbat",
+    "faction.1.sub": "Liberté · Bête · Guerre",
+    "faction.1.desc": "Ils rôdent aux portes de la ville, attendant le bon moment. Des packs de Lasombra et Tzimisce testent les défenses chaque nuit. Leurs Ritae sont des cauchemars que même les anciens redoutent.",
+    "faction.1.clans": "Lasombra, Tzimisce, Antitribu, Packs",
+    "faction.2.name": "Les Anarchs",
+    "faction.2.sub": "Rébellion · Indépendance · Chaos",
+    "faction.2.desc": "Ni serviteurs du Prince ni monstres du Sabbat. Ils croient en la liberté — une liberté que la Bête rend dangereuse. Leur baron de la North Side gagne en influence chaque semaine.",
+    "faction.2.clans": "Brujah, Gangrel, Caitiff, Baronnie",
 
-    <div id="secret7" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('secret7')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Information secrète</span>
-            <h3 class="font-cinzel text-lg text-gray-200 mt-2 mb-3">Helena — 4ème Génération</h3>
-            <p class="font-cormorant text-gray-400 leading-relaxed">Helena est un vampire de la 4ème génération, descendante directe de la lignée de Caine. Elle est ancienne. Si ancienne que son pouvoir est presque divin. Elle dort sous Chicago depuis des siècles, et chaque fois qu'elle se réveille, la ville tremble. Si les rumeurs sont vraies... rien ne sera plus jamais comme avant.</p>
-        </div>
-    </div>
+    "sec.necro.label": "Ils ne se relèveront pas",
+    "sec.necro.title": "Nécrologie",
+    "sec.necro.sub": "Les Kindred disparus ces derniers mois. Mort finale ou fuite ? Personne ne sait.",
 
-    <!-- Contact modals -->
-    <div id="contact1" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('contact1')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Dossier classifié</span>
-            <h3 class="font-cinzel text-xl text-gray-200 mt-2 mb-4">Le Prince de Chicago</h3>
-            <div class="space-y-3 font-cormorant text-gray-400">
-                <p><span class="text-gray-500">Nom :</span> <span class="text-blood-400">CLASSÉ</span></p>
-                <p><span class="text-gray-500">Clan :</span> <span class="text-blood-400">CLASSÉ</span></p>
-                <p><span class="text-gray-500">Génération :</span> <span class="text-blood-400">CLASSÉ</span></p>
-                <p><span class="text-gray-500">Apparence :</span> Personne n'a de description fiable. Certains affirment qu'il change.</p>
-                <p><span class="text-gray-500">Dernière apparition publique :</span> 8 mai 1992 — Elysium du Drake Hotel</p>
-                <p><span class="text-gray-500">Notes :</span> <em class="text-blood-400">Même les Nosferatu n'ont rien trouvé. C'est soit remarquable, soit terrifiant.</em></p>
-            </div>
-        </div>
-    </div>
+    "necro.0.date": "17", "necro.0.month": "Mars", "necro.0.name": "Marcus Veyrac", "necro.0.info": "Brujah · 10ème génération · Anarch",
+    "necro.0.desc": "Trouvé en cendres dans un entrepôt de South Side. Aucune trace de combat. Le feu semble être venu de l'intérieur. Les Tremere n'ont aucun commentaire.",
+    "necro.1.date": "02", "necro.1.month": "Avril", "necro.1.name": "Dr. Elaine Kessler", "necro.1.info": "Tremere · 9ème génération · Chantry de Chicago",
+    "necro.1.desc": "Disparue de la Chantry sans que personne ne remarque. Son rituel de protection était intact. Sa chambre, parfaitement rangée. Comme si elle n'avait jamais existé.",
+    "necro.2.date": "19", "necro.2.month": "Mai", "necro.2.name": "« Digits » Washington", "necro.2.info": "Nosferatu · 11ème génération · Infojockey",
+    "necro.2.desc": "Son réseau de rats a cessé de signaler. Ses alliés Nosferatu refusent de parler. Un seul message laissé sur un BBS : *« J'ai vu ce qu'ils cachent sous le lac. »*",
+    "necro.3.date": "??", "necro.3.month": "???", "necro.3.name": "Inconnu", "necro.3.info": "Clan inconnu · Génération inconnue · Allégeance inconnue",
+    "necro.3.desc": "Un corps vampire retrouvé dans le lac Michigan. Aucun Kindred de Chicago ne le reconnaît. Aucun clan ne le réclame. Son sang était... *différent*.",
 
-    <div id="contact2" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-blood-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('contact2')" class="absolute top-4 right-4 text-gray-600 hover:text-blood-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Dossier</span>
-            <h3 class="font-cinzel text-xl text-gray-200 mt-2 mb-4">Annabelle Trihell</h3>
-            <div class="space-y-3 font-cormorant text-gray-400">
-                <p><span class="text-gray-500">Clan :</span> Tremere</p>
-                <p><span class="text-gray-500">Génération :</span> 8ème</p>
-                <p><span class="text-gray-500">Rôle :</span> Sheriff de Chicago</p>
-                <p><span class="text-gray-500">Apparence :</span> Femme d'une trentaine d'années, cheveux noirs coupés court, toujours en costume sombre. Regard perçant qui semble voir à travers les mensonges.</p>
-                <p><span class="text-gray-500">Tempérament :</span> Froide, calculatrice, implacable. Ne montre jamais d'émotion. Mais certains jureraient avoir vu de la peur dans ses yeux récemment.</p>
-                <p><span class="text-gray-500">Rumeur :</span> <em class="text-blood-400">Pourrait-elle être plus loyale envers Vienne qu'envers le Prince ?</em></p>
-            </div>
-        </div>
-    </div>
+    "sec.contacts.label": "Visages dans l'obscurité",
+    "sec.contacts.title": "Contacts",
+    "sec.contacts.sub": "Cliquez sur un portrait pour découvrir ce qu'on sait d'eux.",
 
-    <div id="contact3" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-amber-800/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('contact3')" class="absolute top-4 right-4 text-gray-600 hover:text-amber-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-amber-600">Dossier Anarch</span>
-            <h3 class="font-cinzel text-xl text-gray-200 mt-2 mb-4">« Switchblade » Diaz</h3>
-            <div class="space-y-3 font-cormorant text-gray-400">
-                <p><span class="text-gray-500">Clan :</span> Brujah</p>
-                <p><span class="text-gray-500">Génération :</span> 10ème</p>
-                <p><span class="text-gray-500">Rôle :</span> Baron de la North Side</p>
-                <p><span class="text-gray-500">Apparence :</span> Grand, costaud, rasé de près. Vêtu en cuir noir même en plein été. Toujours armé — pas que d'armes conventionnelles.</p>
-                <p><span class="text-gray-500">Personnalité :</span> Charismatique mais imprévisible. Capable de négocier comme de détruire. Ses followers le suivent par respect, pas par peur.</p>
-                <p><span class="text-gray-500">Objectif :</span> <em class="text-amber-400">Créer un territoire anarch viable à Chicago. Quitte à déchirer la Camarilla en deux.</em></p>
-            </div>
-        </div>
-    </div>
+    "contact.0.role": "Prince de Chicago", "contact.0.name": "???", "contact.0.info": "Clan inconnu · Gen. inconnue",
+    "contact.0.img": "https://picsum.photos/seed/vampire-prince-dark/400/500.jpg",
+    "contact.0.m.name": "Le Prince de Chicago", "contact.0.m.clan": "CLASSÉ", "contact.0.m.gen": "CLASSÉ", "contact.0.m.role": "CLASSÉ",
+    "contact.0.m.looks": "Personne n'a de description fiable. Certains affirment qu'il change.", "contact.0.m.last": "8 mai 1992 — Elysium du Drake Hotel",
+    "contact.0.m.note": "*Même les Nosferatu n'ont rien trouvé. C'est soit remarquable, soit terrifiant.*",
 
-    <div id="contact4" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);">
-        <div class="modal-content max-w-md w-full rounded-xl border border-gray-700/30 bg-night-100 p-6 relative">
-            <button onclick="closeModal('contact4')" class="absolute top-4 right-4 text-gray-600 hover:text-gray-300 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-            <span class="text-[10px] tracking-[0.2em] uppercase text-gray-500">Dossier Nosferatu</span>
-            <h3 class="font-cinzel text-xl text-gray-200 mt-2 mb-4">« Ratking » Merik</h3>
-            <div class="space-y-3 font-cormorant text-gray-400">
-                <p><span class="text-gray-500">Clan :</span> Nosferatu</p>
-                <p><span class="text-gray-500">Génération :</span> 10ème</p>
-                <p><span class="text-gray-500">Rôle :</span> Information broker — le meilleur de Chicago</p>
-                <p><span class="text-gray-500">Apparence :</span> Inconnue. Comme tous les Nosferatu, sa malédiction le rend monstrueux. On ne le voit jamais en personne — il communique par intermédiaires, par BBS, ou par les rats.</p>
-                <p><span class="text-gray-500">Prix :</span> L'information a toujours un prix. Parfois c'est du sang. Parfois c'est une faveur. Parfois c'est un secret que vous préféreriez garder.</p>
-                <p><span class="text-gray-500">Note :</span> <em class="text-gray-300">Il est le successeur de « Digits ». Et il est terrifié.</em></p>
-            </div>
-        </div>
-    </div>
+    "contact.1.role": "Sheriff", "contact.1.name": "Annabelle Trihell", "contact.1.info": "Tremere · 8ème génération",
+    "contact.1.img": "https://picsum.photos/seed/sheriff-noir-woman/400/500.jpg",
+    "contact.1.m.name": "Annabelle Trihell", "contact.1.m.clan": "Tremere", "contact.1.m.gen": "8ème", "contact.1.m.role": "Sheriff de Chicago",
+    "contact.1.m.looks": "Femme d'une trentaine d'années, cheveux noirs coupés court, toujours en costume sombre. Regard perçant qui semble voir à travers les mensonges.",
+    "contact.1.m.last": "", "contact.1.m.note": "*Pourrait-elle être plus loyale envers Vienne qu'envers le Prince ?*",
 
-    <!-- ========== JAVASCRIPT ========== -->
-    <script>
-        // Pluie
-        function createRain() {
-            const container = document.getElementById('rain');
-            const count = window.innerWidth < 768 ? 40 : 80;
-            for (let i = 0; i < count; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'raindrop';
-                drop.style.left = Math.random() * 100 + '%';
-                drop.style.height = Math.random() * 20 + 10 + 'px';
-                drop.style.animationDuration = Math.random() * 1.5 + 0.5 + 's';
-                drop.style.animationDelay = Math.random() * 3 + 's';
-                drop.style.opacity = Math.random() * 0.5 + 0.1;
-                container.appendChild(drop);
-            }
+    "contact.2.role": "Baron Anarch", "contact.2.name": "« Switchblade » Diaz", "contact.2.info": "Brujah · 10ème génération",
+    "contact.2.img": "https://picsum.photos/seed/baron-anarch-punk/400/500.jpg",
+    "contact.2.m.name": "« Switchblade » Diaz", "contact.2.m.clan": "Brujah", "contact.2.m.gen": "10ème", "contact.2.m.role": "Baron de la North Side",
+    "contact.2.m.looks": "Grand, costaud, rasé de près. Vêtu en cuir noir même en plein été. Toujours armé — pas que d'armes conventionnelles.",
+    "contact.2.m.last": "", "contact.2.m.note": "*Créer un territoire anarch viable à Chicago. Quitte à déchirer la Camarilla en deux.*",
+
+    "contact.3.role": "Information Broker", "contact.3.name": "« Ratking » Merik", "contact.3.info": "Nosferatu · 10ème génération",
+    "contact.3.img": "https://picsum.photos/seed/nosferatu-sewers-dark/400/500.jpg",
+    "contact.3.m.name": "« Ratking » Merik", "contact.3.m.clan": "Nosferatu", "contact.3.m.gen": "10ème", "contact.3.m.role": "Information broker — le meilleur de Chicago",
+    "contact.3.m.looks": "Inconnue. Comme tous les Nosferatu, sa malédiction le rend monstrueux. On ne le voit jamais en personne — il communique par intermédiaires, par BBS, ou par les rats.",
+    "contact.3.m.last": "", "contact.3.m.note": "*Il est le successeur de « Digits ». Et il est terrifié.*",
+
+    "sec.chrono.label": "Ce qui a mené à maintenant",
+    "sec.chrono.title": "Chronologie",
+
+    "chrono.0.date": "Janvier 1992", "chrono.0.title": "L'Édit de Silence",
+    "chrono.0.desc": "Le Prince promulgue un édit interdisant toute investigation sur les disparitions du South Side. Quiconque enfreint cette règle sera marqué comme traître.",
+    "chrono.1.date": "Février 1992", "chrono.1.title": "Le Pack Écarlate",
+    "chrono.1.desc": "Un pack du Sabbat est repéré à Gary, Indiana — à 30 minutes de Chicago. Le Sheriff déploie des Scourges. Deux Scourges ne reviendront pas.",
+    "chrono.2.date": "Mars 1992", "chrono.2.title": "La Mort de Veyrac",
+    "chrono.2.desc": "Marcus Veyrac, Brujah anarch, meurt dans des circonstances mystérieuses. Les Anarchs exigent une enquête. Le Prince refuse. La tension monte.",
+    "chrono.3.date": "Avril 1992", "chrono.3.title": "Disparition de Kessler",
+    "chrono.3.desc": "La Tremere Elaine Kessler disparaît de sa propre Chantry. Vienne envoie un émissaire. Les autres clans commencent à poser des questions embarrassantes.",
+    "chrono.4.date": "Mai 1992", "chrono.4.title": "Le Silence du Prince",
+    "chrono.4.desc": "Le Prince n'a pas été vu en public depuis 12 jours. Personne ne sait où il se trouve. Le Sheriff refuse de commenter. *C'est maintenant que votre histoire commence.*",
+
+    "nod.title": "Le Livre de Nod",
+    "nod.text": "« Écoutez la parole de Caine, le premier père.\n\nNe me cherche pas dans les jardins, car je n'y suis plus. Ne me cherche pas dans les cieux, car je n'y suis pas monté.\n\nCherche-moi dans l'ombre entre les mondes, là où le sang est noir comme l'encre et où les étoiles se noient.\n\nCar j'ai porté la malédiction de Dieu, et de cette malédiction est née votre race. Et de votre race naîtra la fin de toutes choses. »",
+    "nod.source": "— Chapitre des Ténèbres, versets 1-7",
+
+    "cta.quote": "« Et la nuit sera votre domaine, mais jamais votre maison. Car la bête a faim, et la faim est éternelle. »",
+    "cta.source": "— Le Livre de Nod, fragment retrouvé",
+    "cta.line1": "La prochaine session approche.",
+    "cta.line2": "Préparez votre humanité. Elle pourrait vous servir.",
+
+    "footer.text": "Chicago by Night — 1992",
+    "footer.credit": "Vampire : La Mascarade © White Wolf Publishing"
+};
+
+// ============================================================
+//  UTILITAIRES
+// ============================================================
+function markup(text) {
+    if (!text) return '';
+    return text.replace(/\n/g, '<br>').replace(/\*([^*]+)\*/g, '<em class="text-blood-400">$1</em>');
+}
+
+function stripMarkup(text) {
+    if (!text) return '';
+    return text.replace(/<br\s*\/?>/gi, '\n').replace(/<em[^>]*>([^<]+)<\/em>/gi, '*$1*').replace(/<[^>]+>/g, '');
+}
+
+function getData() {
+    let data = {...DEFAULT_DATA};
+    // Priorité 1 : hash URL
+    const hash = location.hash;
+    if (hash.startsWith('#d=')) {
+        try { data = {...data, ...JSON.parse(decodeURIComponent(atob(hash.slice(3))))}; } catch(e) {}
+    }
+    // Priorité 2 : localStorage
+    const stored = localStorage.getItem('vtm_data');
+    if (stored && !hash.startsWith('#d=')) {
+        try { data = {...data, ...JSON.parse(stored)}; } catch(e) {}
+    }
+    return data;
+}
+
+let DATA = getData();
+
+// ============================================================
+//  RENDU DYNAMIQUE
+// ============================================================
+function render() {
+    // Textes statiques avec data-key
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (DATA[key] !== undefined) el.innerHTML = markup(DATA[key]);
+    });
+
+    // Ticker (dupliquer pour le défilement)
+    const tickerRow = document.getElementById('tickerRow');
+    const tickerKeys = ['ticker.0','ticker.1','ticker.2','ticker.3','ticker.4'];
+    let tickerHTML = '';
+    for (let r = 0; r < 2; r++) {
+        tickerKeys.forEach(k => {
+            tickerHTML += `<span class="mx-8 text-xs tracking-wider text-gray-600">${markup(DATA[k]||'')}</span>`;
+        });
+    }
+    tickerRow.innerHTML = tickerHTML;
+
+    // Rumeurs
+    const rumorsGrid = document.getElementById('rumorsGrid');
+    let rumorsHTML = '';
+    const relColors = { 'douteuse':'yellow', 'confirmée':'red', 'non vérifiée':'gray', 'confirmée — urgente':'red', 'partiellement vérifiée':'yellow', 'non vérifiée — critique':'red' };
+    for (let i = 0; i < 6; i++) {
+        const f = DATA[`rumor.${i}.front`]||'', b = DATA[`rumor.${i}.back`]||'', rel = DATA[`rumor.${i}.rel`]||'non vérifiée';
+        const rc = relColors[rel] || 'gray';
+        rumorsHTML += `<div class="flip-card h-64 fade-in" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front rounded-xl border border-blood-900/40 bg-night-50/80 p-6 flex flex-col justify-between" style="backdrop-filter:blur(8px)">
+                    <div><div class="flex items-center gap-2 mb-4"><iconify-icon icon="lucide:ear" class="text-blood-600" width="16"></iconify-icon><span class="text-[10px] tracking-[0.2em] uppercase text-blood-600">Rumeur</span></div>
+                    <p class="font-cormorant text-lg text-gray-300 leading-relaxed">${markup(f)}</p></div>
+                    <p class="text-[10px] text-gray-600 tracking-wider">Cliquez pour révéler →</p>
+                </div>
+                <div class="flip-card-back rounded-xl border border-blood-700/40 bg-blood-950/90 p-6 flex flex-col justify-between" style="backdrop-filter:blur(8px)">
+                    <div><div class="flex items-center gap-2 mb-4"><iconify-icon icon="lucide:eye" class="text-blood-400" width="16"></iconify-icon><span class="text-[10px] tracking-[0.2em] uppercase text-blood-400">Vérifié ?</span></div>
+                    <p class="font-cormorant text-lg text-gray-200 leading-relaxed">${markup(b)}</p></div>
+                    <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-${rc}-600 animate-pulse"></span><span class="text-[10px] text-${rc}-600 tracking-wider uppercase">Fiabilité ${rel}</span></div>
+                </div>
+            </div></div>`;
+    }
+    rumorsGrid.innerHTML = rumorsHTML;
+
+    // Factions
+    const factionsGrid = document.getElementById('factionsGrid');
+    const factIcons = ['lucide:crown','lucide:flame','lucide:flag'];
+    const factColors = ['blood','blood','amber'];
+    let factHTML = '';
+    for (let i = 0; i < 3; i++) {
+        const n = DATA[`faction.${i}.name`]||'', s = DATA[`faction.${i}.sub`]||'', d = DATA[`faction.${i}.desc`]||'', c = DATA[`faction.${i}.clans`]||'';
+        const col = factColors[i];
+        const clans = c.split(',').map(x=>x.trim()).filter(Boolean);
+        factHTML += `<div class="fade-in group relative rounded-xl border border-blood-900/30 bg-night-50/60 overflow-hidden hover:border-blood-700/40 transition-all duration-500" style="backdrop-filter:blur(8px)">
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-${col}-600 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="p-8"><div class="w-12 h-12 rounded-lg bg-${col}-900/30 border border-${col}-800/30 flex items-center justify-center mb-6"><iconify-icon icon="${factIcons[i]}" class="text-${col}-500" width="20"></iconify-icon></div>
+            <h3 class="font-cinzel text-xl text-gray-200 mb-2">${n}</h3><p class="text-[10px] tracking-[0.2em] uppercase text-${col}-600 mb-4">${s}</p>
+            <p class="font-cormorant text-gray-400 leading-relaxed">${markup(d)}</p>
+            <div class="mt-6 pt-6 border-t border-blood-900/20"><div class="flex flex-wrap gap-2">${clans.map(cl=>`<span class="px-2 py-1 text-[10px] tracking-wider uppercase bg-${col}-900/20 text-${col}-400 rounded">${cl}</span>`).join('')}</div></div></div></div>`;
+    }
+    factionsGrid.innerHTML = factHTML;
+
+    // Nécrologie
+    const necroGrid = document.getElementById('necroGrid');
+    let necroHTML = '';
+    for (let i = 0; i < 4; i++) {
+        const dt = DATA[`necro.${i}.date`]||'', mo = DATA[`necro.${i}.month`]||'', nm = DATA[`necro.${i}.name`]||'', inf = DATA[`necro.${i}.info`]||'', desc = DATA[`necro.${i}.desc`]||'';
+        const glitchClass = (i===3) ? ' glitch' : '';
+        const glitchAttr = (i===3) ? ` data-text="${nm}"` : '';
+        const icon = (i===3) ? 'lucide:help-circle' : 'lucide:skull';
+        necroHTML += `<div class="fade-in group flex items-start gap-6 p-6 rounded-xl border border-blood-900/20 bg-night-50/40 hover:border-blood-800/30 transition-all duration-300" style="backdrop-filter:blur(8px)">
+            <div class="text-center min-w-[60px]"><span class="font-cinzel text-2xl text-blood-600">${dt}</span><p class="text-[10px] text-gray-600 tracking-wider uppercase">${mo}</p></div>
+            <div class="flex-1"><h4 class="font-cinzel text-gray-300 group-hover:text-blood-400 transition-colors${glitchClass}"${glitchAttr}>${nm}</h4><p class="text-xs text-gray-600 tracking-wider mt-1">${inf}</p><p class="font-cormorant text-gray-500 mt-3">${markup(desc)}</p></div>
+            <iconify-icon icon="${icon}" class="text-blood-900/30 group-hover:text-blood-700/50 transition-colors mt-1" width="18"></iconify-icon></div>`;
+    }
+    necroGrid.innerHTML = necroHTML;
+
+    // Contacts
+    const contactsGrid = document.getElementById('contactsGrid');
+    const contactColors = ['blood','blood','amber','gray'];
+    let contactsHTML = '';
+    for (let i = 0; i < 4; i++) {
+        const role = DATA[`contact.${i}.role`]||'', name = DATA[`contact.${i}.name`]||'', info = DATA[`contact.${i}.info`]||'';
+        const img = DATA[`contact.${i}.img`]||'';
+        const col = contactColors[i];
+        contactsHTML += `<div class="fade-in group cursor-pointer" onclick="openContactModal(${i})">
+            <div class="relative rounded-xl overflow-hidden border border-blood-900/20 hover:border-blood-700/30 transition-all duration-500">
+                <img src="${img}" alt="" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" style="filter:saturate(0.15) brightness(0.5) contrast(1.2)">
+                <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-${col}-500 mb-1">${role}</p>
+                    <h4 class="font-cinzel text-lg text-gray-200">${name}</h4>
+                    <p class="text-xs text-gray-500 mt-1">${info}</p>
+                </div>
+                <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-${col}-900/50 border border-${col}-700/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <iconify-icon icon="lucide:eye" class="text-${col}-400" width="14"></iconify-icon>
+                </div>
+            </div></div>`;
+    }
+    contactsGrid.innerHTML = contactsHTML;
+
+    // Chronologie
+    const chronoGrid = document.getElementById('chronoGrid');
+    const lineDiv = chronoGrid.querySelector('div');
+    let chronoHTML = lineDiv.outerHTML;
+    for (let i = 0; i < 5; i++) {
+        const dt = DATA[`chrono.${i}.date`]||'', ti = DATA[`chrono.${i}.title`]||'', desc = DATA[`chrono.${i}.desc`]||'';
+        const isRight = i % 2 === 0;
+        const isLast = i === 4;
+        const dotClass = isLast ? 'bg-blood-500 animate-pulse' : 'bg-blood-700';
+        if (isRight) {
+            chronoHTML += `<div class="fade-in relative flex md:justify-end mb-12 md:pr-[calc(50%+2rem)] pl-12 md:pl-0">
+                <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full ${dotClass} border-2 border-night-500 md:-translate-x-1.5"></div>
+                <div class="max-w-md"><span class="text-[10px] tracking-[0.2em] uppercase ${isLast?'text-blood-400':'text-blood-600'}">${dt}</span><h4 class="font-cinzel text-gray-200 mt-1">${ti}</h4><p class="font-cormorant text-gray-500 mt-2">${markup(desc)}</p></div></div>`;
+        } else {
+            chronoHTML += `<div class="fade-in relative flex md:justify-start mb-12 md:pl-[calc(50%+2rem)] pl-12">
+                <div class="absolute left-2.5 md:left-1/2 top-1 w-3 h-3 rounded-full ${dotClass} border-2 border-night-500 md:-translate-x-1.5"></div>
+                <div class="max-w-md"><span class="text-[10px] tracking-[0.2em] uppercase ${isLast?'text-blood-400':'text-blood-600'}">${dt}</span><h4 class="font-cinzel text-gray-200 mt-1">${ti}</h4><p class="font-cormorant text-gray-500 mt-2">${markup(desc)}</p></div></div>`;
         }
-        createRain();
+    }
+    chronoGrid.innerHTML = chronoHTML;
 
-        // Mobile menu
-        document.getElementById('menuBtn').addEventListener('click', () => {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        });
-        // Close mobile menu on link click
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobileMenu').classList.add('hidden');
-            });
-        });
+    // Re-observer les fade-in
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+}
 
-        // Scroll fade-in
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+function openContactModal(i) {
+    const prefix = `contact.${i}.m.`;
+    const name = DATA[prefix+'name']||'', clan = DATA[prefix+'clan']||'', gen = DATA[prefix+'gen']||'';
+    const role = DATA[prefix+'role']||'', looks = DATA[prefix+'looks']||'', last = DATA[prefix+'last']||'', note = DATA[prefix+'note']||'';
+    const col = ['blood','blood','amber','gray'][i] || 'blood';
+    const label = ['Dossier classifié','Dossier','Dossier Anarch','Dossier Nosferatu'][i] || 'Dossier';
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    let html = `<div id="contactModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(8px)" onclick="if(event.target===this)closeModal('contactModal')">
+        <div class="modal-content max-w-md w-full rounded-xl border border-${col}-800/30 bg-night-100 p-6 relative">
+            <button onclick="closeModal('contactModal')" class="absolute top-4 right-4 text-gray-600 hover:text-${col}-400 transition-colors"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
+            <span class="text-[10px] tracking-[0.2em] uppercase text-${col}-600">${label}</span>
+            <h3 class="font-cinzel text-xl text-gray-200 mt-2 mb-4">${name}</h3>
+            <div class="space-y-3 font-cormorant text-gray-400">
+                <p><span class="text-gray-500">Clan :</span> ${clan}</p>
+                <p><span class="text-gray-500">Génération :</span> ${gen}</p>
+                <p><span class="text-gray-500">Rôle :</span> ${role}</p>
+                ${looks ? `<p><span class="text-gray-500">Apparence :</span> ${markup(looks)}</p>` : ''}
+                ${last ? `<p><span class="text-gray-500">Dernière apparition :</span> ${last}</p>` : ''}
+                ${note ? `<p><span class="text-gray-500">Note :</span> ${markup(note)}</p>` : ''}
+            </div>
+        </div></div>`;
+    document.getElementById('dynamicModals').innerHTML = html;
+    requestAnimationFrame(() => document.getElementById('contactModal').classList.add('active'));
+}
 
-        // Modals
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-            document.body.style.overflow = 'hidden';
+// ============================================================
+//  MODALS
+// ============================================================
+function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
+function closeModal(id) { const el = document.getElementById(id); if(el) el.classList.remove('active'); document.body.style.overflow=''; }
+document.querySelectorAll('.modal-overlay').forEach(o => { o.addEventListener('click', e => { if(e.target===o){o.classList.remove('active');document.body.style.overflow='';} }); });
+document.addEventListener('keydown', e => { if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));document.body.style.overflow='';} });
+
+// ============================================================
+//  MOT DE PASSE
+// ============================================================
+const PW_KEY = 'vtm_editor_pw';
+async function hashPw(pw) {
+    const data = new TextEncoder().encode(pw + '_vtm_chicago_1992_salt');
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPassword() {
+    const stored = localStorage.getItem(PW_KEY);
+    if (!stored) {
+        // Première fois : définir le mot de passe
+        const pw = prompt('🔧 Premier accès à l\'éditeur.\n\nDéfinissez votre mot de passe (il sera demandé à chaque futur accès) :');
+        if (!pw || pw.length < 3) { toast('Mot de passe trop court','error'); return false; }
+        const h = await hashPw(pw);
+        localStorage.setItem(PW_KEY, h);
+        toast('Mot de passe enregistré !','success');
+        return true;
+    }
+    const pw = prompt('🔧 Entrez le mot de passe de l\'éditeur :');
+    if (!pw) return false;
+    const h = await hashPw(pw);
+    if (h === stored) return true;
+    toast('Mot de passe incorrect','error');
+    return false;
+}
+
+// ============================================================
+//  ÉDITEUR
+// ============================================================
+let editorOpen = false;
+const EDITOR_SECTIONS = [
+    { id:'hero', label:'🏠 Accueil', keys:['hero.year','hero.title','hero.quote'] },
+    { id:'ticker', label:'📰 Ticker', keys:['ticker.0','ticker.1','ticker.2','ticker.3','ticker.4'] },
+    { id:'rumors', label:'🗣️ Rumeurs', keys: Array.from({length:6},(_,i)=>[`rumor.${i}.front`,`rumor.${i}.back`,`rumor.${i}.rel`]).flat() },
+    { id:'factions', label:'⚔️ Factions', keys: Array.from({length:3},(_,i)=>[`faction.${i}.name`,`faction.${i}.sub`,`faction.${i}.desc`,`faction.${i}.clans`]).flat() },
+    { id:'necro', label:'💀 Nécrologie', keys: Array.from({length:4},(_,i)=>[`necro.${i}.date`,`necro.${i}.month`,`necro.${i}.name`,`necro.${i}.info`,`necro.${i}.desc`]).flat() },
+    { id:'contacts', label:'👤 Contacts', keys: Array.from({length:4},(_,i)=>[`contact.${i}.role`,`contact.${i}.name`,`contact.${i}.info`,`contact.${i}.img`,`contact.${i}.m.name`,`contact.${i}.m.clan`,`contact.${i}.m.gen`,`contact.${i}.m.role`,`contact.${i}.m.looks`,`contact.${i}.m.last`,`contact.${i}.m.note`]).flat() },
+    { id:'chrono', label:'📅 Chronologie', keys: Array.from({length:5},(_,i)=>[`chrono.${i}.date`,`chrono.${i}.title`,`chrono.${i}.desc`]).flat() },
+    { id:'nod', label:'📖 Livre de Nod', keys:['nod.title','nod.text','nod.source'] },
+    { id:'cta', label:'🌑 Fin', keys:['cta.quote','cta.source','cta.line1','cta.line2'] },
+    { id:'footer', label:'📎 Footer', keys:['footer.text','footer.credit'] },
+    { id:'sections', label:'📝 Titres', keys:['sec.rumors.label','sec.rumors.title','sec.rumors.sub','sec.factions.label','sec.factions.title','sec.necro.label','sec.necro.title','sec.necro.sub','sec.contacts.label','sec.contacts.title','sec.contacts.sub','sec.chrono.label','sec.chrono.title'] },
+];
+
+let currentTab = 'hero';
+
+function buildEditorTabs() {
+    const tabs = document.getElementById('editorTabs');
+    tabs.innerHTML = EDITOR_SECTIONS.map(s =>
+        `<button class="editor-tab px-3 py-1.5 text-[11px] tracking-wider uppercase rounded-md border border-transparent text-gray-500 hover:text-gray-300 transition-colors ${s.id===currentTab?'active':''}" onclick="switchTab('${s.id}')">${s.label}</button>`
+    ).join('');
+}
+
+function buildEditorFields() {
+    const fields = document.getElementById('editorFields');
+    const section = EDITOR_SECTIONS.find(s=>s.id===currentTab);
+    if (!section) return;
+
+    fields.innerHTML = section.keys.map(key => {
+        const val = stripMarkup(DATA[key]||'');
+        const isImg = key.endsWith('.img');
+        const isRel = key.endsWith('.rel');
+        const label = key.split('.').slice(1).join(' — ') || key;
+
+        if (isImg) {
+            return `<div class="editor-field"><label>${label} (URL de l'image)</label><input type="url" value="${(DATA[key]||'').replace(/"/g,'&quot;')}" onchange="updateField('${key}',this.value)" placeholder="https://..."></div>`;
         }
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-            document.body.style.overflow = '';
+        if (isRel) {
+            return `<div class="editor-field"><label>${label}</label><input type="text" value="${val.replace(/"/g,'&quot;')}" onchange="updateField('${key}',this.value)" placeholder="ex: douteuse, confirmée, non vérifiée"></div>`;
         }
-        // Close modal on overlay click
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-        });
-        // Close modal on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(m => {
-                    m.classList.remove('active');
-                });
-                document.body.style.overflow = '';
-            }
-        });
+        const rows = val.length > 80 ? 4 : val.length > 40 ? 3 : 2;
+        return `<div class="editor-field"><label>${label}</label><textarea rows="${rows}" onchange="updateField('${key}',this.value)">${val}</textarea></div>`;
+    }).join('');
+}
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+function switchTab(id) {
+    currentTab = id;
+    buildEditorTabs();
+    buildEditorFields();
+}
+
+function updateField(key, value) {
+    DATA[key] = value;
+    render();
+    // Auto-save
+    clearTimeout(window._autoSaveTimer);
+    window._autoSaveTimer = setTimeout(() => saveToStorage(true), 1000);
+}
+
+function toggleEditor(open) {
+    editorOpen = open;
+    document.getElementById('editorOverlay').classList.toggle('hidden', !open);
+    document.getElementById('editorDrawer').classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) { buildEditorTabs(); buildEditorFields(); }
+}
+
+function saveToStorage(silent) {
+    localStorage.setItem('vtm_data', JSON.stringify(DATA));
+    if (!silent) toast('Sauvegardé dans le navigateur','success');
+}
+
+function exportLink() {
+    try {
+        const json = JSON.stringify(DATA);
+        const encoded = btoa(encodeURIComponent(json));
+        const url = location.origin + location.pathname + '#d=' + encoded;
+        navigator.clipboard.writeText(url).then(() => {
+            toast('Lien copié ! Envoyez-le à vos joueurs.','success');
+        }).catch(() => {
+            // Fallback
+            prompt('Copiez ce lien :', url);
+            toast('Lien généré !','success');
         });
-    </script>
+    } catch(e) {
+        toast('Erreur lors de la génération du lien','error');
+    }
+}
+
+function resetData() {
+    if (!confirm('⚠️ Réinitialiser tous les textes aux valeurs par défaut ? Cette action est irréversible.')) return;
+    DATA = {...DEFAULT_DATA};
+    localStorage.removeItem('vtm_data');
+    render();
+    buildEditorFields();
+    toast('Données réinitialisées','success');
+}
+
+// ============================================================
+//  TOAST
+// ============================================================
+function toast(msg, type) {
+    const container = document.getElementById('toastContainer');
+    const colors = { success:'border-blood-700 bg-blood-950/90 text-blood-300', error:'border-red-700 bg-red-950/90 text-red-300', info:'border-gray-600 bg-gray-900/90 text-gray-300' };
+    const icons = { success:'lucide:check-circle', error:'lucide:alert-circle', info:'lucide:info' };
+    const el = document.createElement('div');
+    el.className = `toast px-4 py-3 rounded-lg border ${colors[type]||colors.info} text-sm flex items-center gap-2 backdrop-blur-sm`;
+    el.innerHTML = `<iconify-icon icon="${icons[type]||icons.info}" width="16"></iconify-icon> ${msg}`;
+    container.appendChild(el);
+    requestAnimationFrame(()=>el.classList.add('show'));
+    setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},3000);
+}
+
+// ============================================================
+//  PLUIE
+// ============================================================
+function createRain() {
+    const c = document.getElementById('rain');
+    const count = window.innerWidth < 768 ? 40 : 80;
+    for (let i=0;i<count;i++) {
+        const d = document.createElement('div');
+        d.className='raindrop';
+        d.style.left=Math.random()*100+'%';
+        d.style.height=Math.random()*20+10+'px';
+        d.style.animationDuration=Math.random()*1.5+0.5+'s';
+        d.style.animationDelay=Math.random()*3+'s';
+        d.style.opacity=Math.random()*0.5+0.1;
+        c.appendChild(d);
+    }
+}
+
+// ============================================================
+//  SCROLL
+// ============================================================
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
+
+// ============================================================
+//  MOBILE MENU
+// ============================================================
+document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden')));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+});
+
+// ============================================================
+//  ADMIN TRIGGER : triple-clic sur le logo OU ?admin dans l'URL
+// ============================================================
+let clickCount = 0;
+document.getElementById('adminTrigger').addEventListener('click', () => {
+    clickCount++;
+    if (clickCount >= 3) {
+        clickCount = 0;
+        if (editorOpen) { toggleEditor(false); return; }
+        checkPassword().then(ok => { if(ok) toggleEditor(true); });
+    }
+    setTimeout(() => clickCount = 0, 600);
+});
+
+if (location.search.includes('admin') || location.hash === '#admin') {
+    history.replaceState(null,'',location.pathname);
+    checkPassword().then(ok => { if(ok) setTimeout(()=>toggleEditor(true),500); });
+}
+
+// Editor overlay click to close
+document.getElementById('editorOverlay').addEventListener('click', () => toggleEditor(false));
+
+// ============================================================
+//  INIT
+// ============================================================
+createRain();
+render();
+</script>
 </body>
 </html>
