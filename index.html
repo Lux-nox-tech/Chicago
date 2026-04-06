@@ -24,7 +24,7 @@
         .nav-link:hover::after,.nav-link.active::after{width:100%}
         .hero-title{font-size:clamp(3.5rem,11vw,9rem);font-weight:900;line-height:.85;color:var(--fg);letter-spacing:.05em;text-transform:uppercase}
         .hero-rule{width:80px;height:1px;background:var(--red2);opacity:.6}
-        .hero-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.9rem,5.5vw,3.5rem);line-height:1.55;color:var(--fg2);max-width:700px;text-align:left;letter-spacing:.01em}
+        .hero-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.2vw,1.3rem);line-height:1.7;color:var(--fg2);max-width:520px;text-align:left}
         .stitle{font-size:clamp(1.3rem,3vw,1.7rem);font-weight:700;color:var(--fg);letter-spacing:.04em;text-transform:uppercase}
         .stitle::before{content:'';display:block;width:30px;height:2px;background:var(--red2);margin-bottom:.6rem}
         .card{background:var(--card);border:1px solid var(--border);transition:all .3s;position:relative}
@@ -75,7 +75,7 @@
         .jf:hover{border-color:var(--fg2);color:var(--fg)}
         .jfc{font-size:.52rem;margin-left:.35rem;padding:1px 5px;border-radius:8px;background:rgba(255,255,255,.04);color:inherit}
         #js-ok{position:fixed;bottom:0;left:0;background:var(--ok);color:#fff;font-family:monospace;font-size:10px;padding:2px 8px;z-index:9999;display:none}
-        @media(max-width:640px){.die-face{width:36px;height:36px;font-size:.95rem}.je .eiw img{max-height:300px}.jf{font-size:.52rem;padding:.3rem .6rem}.hero-quote{font-size:1.5rem;max-width:100%}}
+        @media(max-width:640px){.die-face{width:36px;height:36px;font-size:.95rem}.je .eiw img{max-height:300px}.jf{font-size:.52rem;padding:.3rem .6rem}.hero-quote{font-size:.95rem;max-width:100%}}
         @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
     </style>
 </head>
@@ -100,12 +100,12 @@
             <div class="min-h-[88vh] flex flex-col items-center justify-center text-center px-4">
                 <div class="hero-rule mb-10"></div>
                 <h1 class="hero-title">Chicago<br>by Night</h1>
-                <div class="hero-rule mt-10 mb-14"></div>
+                <div class="hero-rule mt-10 mb-12"></div>
                 <blockquote class="hero-quote">
                     Je hurlai de desespoir face a cette terrible malediction tout en meurtrissant ma chair.<br>
                     Du sang s'ecoula de mes yeux. Je mis ces larmes dans une coupe et les bus.
                 </blockquote>
-                <div class="flex gap-3 mt-14 flex-wrap justify-center">
+                <div class="flex gap-3 mt-12 flex-wrap justify-center">
                     <button class="btn-r" data-goto="dice">Lancer les Des</button>
                     <button class="btn-o" data-goto="kindred">Kindred</button>
                     <button class="btn-o" data-goto="journal">Journal</button>
@@ -169,7 +169,7 @@
             <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
                 <h2 class="stitle mb-8">Factions</h2>
                 <div id="factions-grid" class="grid sm:grid-cols-3 gap-4 mb-16"></div>
-                <h2 class="stitle mb-8">Les Sept Clans</h2>
+                <h2 class="stitle mb-8">Les Clans</h2>
                 <div id="clans-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </section>
@@ -218,7 +218,16 @@ function initApp(){
     try{if(typeof firebase!=='undefined'&&firebase.database){if(firebase.apps.length===0){firebase.initializeApp({apiKey:"AIzaSyCr4QF8CTT-sv9kK-QLcQAUXyFTTJlvGJs",authDomain:"scion-876fe.firebaseapp.com",databaseURL:"https://scion-876fe-default-rtdb.europe-west1.firebasedatabase.app",projectId:"scion-876fe",storageBucket:"scion-876fe.firebasestorage.app",messagingSenderId:"145792689346",appId:"1:145792689346:web:f6b2e8d6fa04f71ff7075b"});}db=firebase.database();firebaseOk=true;console.log('Firebase OK');}}catch(e){console.log("Mode local:",e.message);}
 
     var FACTIONS=[{id:'camarilla',name:'La Camarilla',color:'#4a1a1a',desc:"Le Prince regne — du moins en theorie. Les Traditions sont la loi.",clans:"Ventrue, Toreador, Tremere, Nosferatu, Brujah, Malkavian, Gangrel"},{id:'sabbat',name:'Le Sabbat',color:'#3a0a0a',desc:"Des packs de fanatiques testent les defenses chaque nuit. Leurs Ritae sont des cauchemars.",clans:"Antitribu"},{id:'anarch',name:'Les Anarchs',color:'#2a1a0a',desc:"Ni serviteurs ni monstres. Ils croient en la liberte — une liberte que la Bete rend dangereuse.",clans:"Brujah, Gangrel, Caitiff"}];
-    var CLANS=[{id:'ventrue',name:'Ventrue',nickname:'Sang-Royal',color:'#3a5a7a',desc:"Les aristocrates. Dirigeants naturels, ils controlent finances, politique et sang."},{id:'toreador',name:'Toreador',nickname:'Artistes',color:'#7a3a5a',desc:"Creatifs et passionnes. Leur sensibilite est leur plus grande force et faiblesse."},{id:'tremere',name:'Tremere',nickname:'Sorciers',color:'#5a3a7a',desc:"Mages devenus vampires. Maitres de la Thaumaturgie, craints et meprises."},{id:'nosferatu',name:'Nosferatu',nickname:'Vermins',color:'#4a4a4a',desc:"Deformes par l'Embrace. Les rois de l'information — ils savent tout."},{id:'brujah',name:'Brujah',nickname:'Erudits',color:'#6a2a2a',desc:"Philosophes devenus guerriers. Leur passion pour la justice les pousse souvent a la violence."},{id:'malkavian',name:'Malkavian',nickname:'Fous',color:'#5a3a5a',desc:"Touches par la folie, ils voient des verites cachees. Derriere chaque delire, une prophetie."},{id:'gangrel',name:'Gangrel',nickname:'Vagabonds',color:'#2a4a2a',desc:"Proches de la Bete. Maitres de la metamorphose, les plus autonomes de tous."}];
+    var CLANS=[
+        {id:'ventrue',name:'Ventrue',nickname:'Sang bleu',color:'#3a5a7a',desc:"Les Ventrue ne sont pas appeles le Clan des Rois pour rien. Choisissant soigneusement leur descendance parmi des mortels familiarises du pouvoir, de la richesse et de l'influence, les Ventrue se presentent comme les aristocrates du monde des vampires. Leurs membres sont censés prendre le commandement chaque fois que possible, et ils sont prets a endurer les tempetes afin de mener depuis le front."},
+        {id:'toreador',name:'Toreador',nickname:'Divas',color:'#7a3a5a',desc:"Connus pour leur nature seduisante, leur presence envoûtante et leur grace eloquente poussee jusqu'a l'obsession, les vampires Toreador Etreignent des artistes et des amants pour les integrer a leurs rangs, cherchant sans cesse a raviver leurs coeurs eteints. Dotees d'une grace et d'un charme surnaturels, les Divas sont toujours en quete de la prochaine sensation forte, laissant derriere elles un amas d'amants et de victimes abandonnes."},
+        {id:'tremere',name:'Tremere',nickname:'Mage du sang',color:'#5a3a7a',desc:"Le mysterieux Clan Tremere etait autrefois une maison de mages mortels qui cherchaient l'immortalite, mais ne trouverent que la non-vie. Devenus vampires, ils ont perfectionne des moyens de plier leur propre Sang a leur volonte, utilisant leurs sorcelleries pour maitriser et ensorceler a la fois le monde des mortels et celui des vampires. Leur pouvoir les rend precieux, mais peu de vampires font confiance a leurs manigances."},
+        {id:'nosferatu',name:'Nosferatu',nickname:"Rats d'egout",color:'#4a4a4a',desc:"Les Nosferatu portent leur malediction a l'exterieur. Leurs corps, horriblement tordus et deformes par l'Embrace, les condamnent a roder en marge de la plupart des villes, ou ils agissent comme espions et courtiers en informations. Grace aux animaux et a leur propre capacite surnaturelle a se dissimuler, rien n'echappe aux yeux de ceux qu'on appelle les Rats des Egouts."},
+        {id:'brujah',name:'Brujah',nickname:'Canailles',color:'#6a2a2a',desc:"Les Brujah sont un clan de radicaux et de fauteurs de troubles, Etreignant ceux qui sont prets a remettre quelqu'un a sa place lorsque la situation l'exige. La plupart se voient comme des guerriers porteurs d'une cause, et ces Rebelles sont guides par leurs passions, leur force et leur devouement a leurs ideaux — quels qu'ils soient."},
+        {id:'malkavian',name:'Malkavian',nickname:'Lunatiques',color:'#5a3a5a',desc:"Tournes en derision comme des Lunatiques par les autres vampires, le Sang des Malkaviens leur permet de percevoir et de predire des verites cachees aux autres. A l'image des « sages fous » de la poesie, leur vision fragmentee decoule du fait de voir trop de choses du monde a la fois, de comprendre trop profondement et de ressentir des emotions tout simplement trop intenses pour etre supportees."},
+        {id:'gangrel',name:'Gangrel',nickname:'Sauvages',color:'#2a4a2a',desc:"Souvent plus proches des betes que des autres vampires, les Gangrel se considerent comme des predateurs ultimes. Ces Ferals rodent dans les terres sauvages aussi aisement que dans la jungle urbaine, et aucun clan de vampires ne peut egaler leur capacite a endurer, survivre et prosperer dans n'importe quel environnement. Souvent farouchement territoriaux, leurs capacites de metamorphose donnent meme des scrupules aux morts-vivants."},
+        {id:'caitiff',name:'Caitiff',nickname:'Sans clan',color:'#3a3a3a',desc:"Ne presentant aucune lignee discernable, les Caitiff sont des vampires sans clan. Mepris par leurs pairs en raison de leur absence de filiation, mais aussi redoutes pour leur imprevisibilite. Bons a tout faire mais maitres en rien, chaque Panders trace sa propre voie dans la societe des damnes, libre a la fois de toute ascendance et de toute attente."}
+    ];
     var JOURNAL_CATS={chronicle:{label:'Chronique',icon:'fa-scroll',color:'#4a4a4a'},rumeur:{label:'Rumeur',icon:'fa-ear-listen',color:'#6a4a2a'},rapport:{label:'Rapport',icon:'fa-map-location-dot',color:'#3a5a7a'},lore:{label:'Lore',icon:'fa-book-open',color:'#5a3a5a'},evenement:{label:'Evenement',icon:'fa-bolt',color:'#6a1a1a'},annonce:{label:'Annonce',icon:'fa-bullhorn',color:'#2a4a2a'},pnj:{label:'PNJ',icon:'fa-user-secret',color:'#5a3a5a'}};
 
     function defaultState(){return{campaign:{name:'',chronicle:'prelude',desc:''},kindred:[],diceHistory:[]};}
